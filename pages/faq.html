@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    FAQ | Distribuidora Central
+  </title>
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="../css/variables.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../css/style.css"
+  >
+
+  <!-- ICONOS -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+
+  <!-- FUENTE -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    body{
+
+      font-family:'Poppins',sans-serif;
+
+      background:
+        linear-gradient(
+          180deg,
+          #f6f7f9,
+          #eef2f5
+        );
+
+      color:#111;
+
+      padding-bottom:40px;
+
+    }
+
+    .faq-container{
+
+      width:100%;
+
+      max-width:480px;
+
+      margin:auto;
+
+      padding:18px 14px;
+
+    }
+
+    /* ======================================== */
+    /* HEADER */
+    /* ======================================== */
+
+    .faq-header{
+
+      background:
+        linear-gradient(
+          135deg,
+          #032b13,
+          #064420
+        );
+
+      border-radius:28px;
+
+      padding:24px 20px;
+
+      color:white;
+
+      margin-bottom:18px;
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.12);
+
+    }
+
+    .faq-header h1{
+
+      font-size:24px;
+
+      margin-bottom:8px;
+
+    }
+
+    .faq-header p{
+
+      font-size:13px;
+
+      line-height:1.5;
+
+      color:
+        rgba(255,255,255,0.82);
+
+    }
+
+    /* ======================================== */
+    /* FAQ ITEM */
+    /* ======================================== */
+
+    .faq-item{
+
+      background:white;
+
+      border-radius:20px;
+
+      margin-bottom:12px;
+
+      overflow:hidden;
+
+      box-shadow:
+        0 4px 14px rgba(0,0,0,0.05);
+
+    }
+
+    .faq-question{
+
+      width:100%;
+
+      border:none;
+
+      background:white;
+
+      padding:18px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:space-between;
+
+      gap:12px;
+
+      cursor:pointer;
+
+      font-family:'Poppins',sans-serif;
+
+      font-size:14px;
+
+      font-weight:600;
+
+      text-align:left;
+
+      color:#111;
+
+    }
+
+    .faq-question i{
+
+      transition:0.25s ease;
+
+      color:#0b5d2a;
+
+      font-size:13px;
+
+    }
+
+    .faq-item.active .faq-question i{
+
+      transform:rotate(180deg);
+
+    }
+
+    /* ======================================== */
+    /* ANSWER */
+    /* ======================================== */
+
+    .faq-answer{
+
+      max-height:0;
+
+      overflow:hidden;
+
+      transition:
+        max-height 0.3s ease;
+
+    }
+
+    .faq-answer p{
+
+      padding:
+        0
+        18px
+        18px;
+
+      font-size:13px;
+
+      line-height:1.6;
+
+      color:#666;
+
+    }
+
+    .faq-item.active .faq-answer{
+
+      max-height:300px;
+
+    }
+
+    /* ======================================== */
+    /* WHATSAPP */
+    /* ======================================== */
+
+    .faq-whatsapp{
+
+      margin-top:24px;
+
+      background:white;
+
+      border-radius:24px;
+
+      padding:22px 18px;
+
+      text-align:center;
+
+      box-shadow:
+        0 4px 14px rgba(0,0,0,0.05);
+
+    }
+
+    .faq-whatsapp h3{
+
+      font-size:18px;
+
+      margin-bottom:8px;
+
+    }
+
+    .faq-whatsapp p{
+
+      font-size:13px;
+
+      color:#666;
+
+      margin-bottom:18px;
+
+      line-height:1.5;
+
+    }
+
+    .faq-whatsapp a{
+
+      width:100%;
+
+      min-height:54px;
+
+      border-radius:16px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #063b18,
+          #0f6b2f
+        );
+
+      color:white;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      gap:10px;
+
+      text-decoration:none;
+
+      font-weight:700;
+
+      font-size:15px;
+
+    }
+
+    /* ======================================== */
+    /* BACK */
+    /* ======================================== */
+
+    .btn-back{
+
+      display:flex;
+
+      align-items:center;
+
+      gap:8px;
+
+      margin-bottom:18px;
+
+      text-decoration:none;
+
+      color:#111;
+
+      font-size:13px;
+
+      font-weight:600;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="faq-container">
+
+    <!-- VOLVER -->
+
+    <a
+      href="../index.html"
+      class="btn-back"
+    >
+
+      <i class="fa-solid fa-arrow-left"></i>
+
+      Volver al catálogo
+
+    </a>
+
+    <!-- HEADER -->
+
+    <section class="faq-header">
+
+      <h1>
+        Preguntas frecuentes
+      </h1>
+
+      <p>
+        Resolvemos las dudas más comunes sobre pedidos, pagos y envíos.
+      </p>
+
+    </section>
+
+    <!-- FAQ -->
+
+    <div class="faq-item">
+
+      <button class="faq-question">
+
+        ¿Cómo hago un pedido?
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+      </button>
+
+      <div class="faq-answer">
+
+        <p>
+          Agrega los productos al carrito y luego presiona “Finalizar pedido”.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================== -->
+
+    <div class="faq-item">
+
+      <button class="faq-question">
+
+        ¿Hacen envíos?
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+      </button>
+
+      <div class="faq-answer">
+
+        <p>
+          Sí, realizamos entregas en CABA y zonas seleccionadas de GBA.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================== -->
+
+    <div class="faq-item">
+
+      <button class="faq-question">
+
+        ¿Qué medios de pago aceptan?
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+      </button>
+
+      <div class="faq-answer">
+
+        <p>
+          Transferencia bancaria, efectivo y billeteras virtuales.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================== -->
+
+    <div class="faq-item">
+
+      <button class="faq-question">
+
+        ¿Los precios son mayoristas?
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+      </button>
+
+      <div class="faq-answer">
+
+        <p>
+          Sí. Todos los precios publicados corresponden a valores mayoristas.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- WHATSAPP -->
+
+    <section class="faq-whatsapp">
+
+      <h3>
+        ¿Necesitas ayuda?
+      </h3>
+
+      <p>
+        Nuestro equipo puede ayudarte rápidamente por WhatsApp.
+      </p>
+
+      <a
+        href="https://wa.me/5491138599611"
+        target="_blank"
+      >
+
+        <i class="fa-brands fa-whatsapp"></i>
+
+        Hablar por WhatsApp
+
+      </a>
+
+    </section>
+
+  </div>
+
+  <!-- SCRIPT -->
+
+  <script>
+
+    const faqItems =
+      document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+
+      const button =
+        item.querySelector(".faq-question");
+
+      button.addEventListener("click", () => {
+
+        item.classList.toggle("active");
+
+      });
+
+    });
+
+  </script>
+
+</body>
+
+</html>

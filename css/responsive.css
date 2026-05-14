@@ -1,0 +1,74 @@
+@media (min-width: 768px) {
+
+  #app {
+
+    max-width: 1200px;
+
+  }
+
+  #productos {
+
+    grid-template-columns:
+      repeat(auto-fit, minmax(240px, 1fr));
+
+  }
+
+  .slider-premium img {
+
+    height: 320px;
+
+  }
+
+  .header-premium {
+
+    padding: 18px;
+
+  }
+
+  .logo-premium {
+
+    width: 52px;
+
+    height: 52px;
+
+  }
+
+  .logo-texto h1 {
+
+    font-size: 24px;
+
+  }
+
+  .logo-texto p {
+
+    font-size: 11px;
+
+  }
+
+  .header-buscador input {
+
+    height: 54px;
+
+    font-size: 15px;
+
+  }
+
+  .carrito-top {
+
+    height: 54px;
+
+    padding: 0 20px;
+
+  }
+
+  .categorias-premium button {
+
+    height: 48px;
+
+    padding: 0 20px;
+
+    font-size: 14px;
+
+  }
+
+}

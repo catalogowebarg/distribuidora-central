@@ -1,1 +1,2 @@
-# distribuidora-central
+# catalogo-base-bebidas
+Catalogo web para distribuidoras

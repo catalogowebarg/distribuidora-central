@@ -1,0 +1,52 @@
+:root {
+
+  /* COLORES */
+
+  --color-principal: #D9204C;
+
+  --color-principal-hover:
+    #b9183f;
+
+  --color-secundario:
+    #F8F7F5;
+
+  --color-texto:
+    #222222;
+
+  --color-texto-soft:
+    #666666;
+
+  --color-borde:
+    #e5e5e5;
+
+  --color-white:
+    #ffffff;
+
+  --color-stock:
+    #2e7d32;
+
+  --color-sin-stock:
+    #c62828;
+
+  /* RADIOS */
+
+  --radius-sm: 10px;
+
+  --radius-md: 16px;
+
+  --radius-lg: 22px;
+
+  /* SHADOWS */
+
+  --shadow-soft:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+
+  --shadow-hover:
+    0 8px 18px rgba(0, 0, 0, 0.12);
+
+  /* TRANSITIONS */
+
+  --transition:
+    all 0.2s ease;
+
+}
