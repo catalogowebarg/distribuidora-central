@@ -4,33 +4,40 @@
 
 function obtenerDatosCliente() {
 
-  const nombre =
-    document
-      .getElementById("nombre-cliente")
-      .value
-      .trim();
+  const nombreInput =
+    document.getElementById(
+      "nombre-cliente"
+    );
+
+  const direccionInput =
+    document.getElementById(
+      "direccion-cliente"
+    );
 
   const entregaSeleccionada =
     document.querySelector(
       'input[name="tipo-entrega"]:checked'
     );
 
-  const direccion =
-    document
-      .getElementById("direccion-cliente")
-      .value
-      .trim();
-
   return {
 
-    nombre,
+    nombre:
+
+      nombreInput
+        ? nombreInput.value.trim()
+        : "",
 
     entrega:
+
       entregaSeleccionada
         ? entregaSeleccionada.value
         : "retiro",
 
-    direccion
+    direccion:
+
+      direccionInput
+        ? direccionInput.value.trim()
+        : ""
 
   };
 
@@ -42,9 +49,13 @@ function obtenerDatosCliente() {
 
 function validarPedido() {
 
+  // CARRITO
+
   if (carrito.length === 0) {
 
-    alert("El carrito está vacío");
+    alert(
+      "El carrito está vacío"
+    );
 
     return false;
 
@@ -53,20 +64,30 @@ function validarPedido() {
   const datos =
     obtenerDatosCliente();
 
+  // NOMBRE
+
   if (!datos.nombre) {
 
-    alert("Ingresá tu nombre");
+    alert(
+      "Ingresá tu nombre"
+    );
 
     return false;
 
   }
 
+  // DIRECCIÓN
+
   if (
+
     datos.entrega === "delivery" &&
     !datos.direccion
+
   ) {
 
-    alert("Ingresá una dirección");
+    alert(
+      "Ingresá una dirección"
+    );
 
     return false;
 
@@ -79,67 +100,105 @@ function validarPedido() {
 // ========================================
 // GENERAR MENSAJE
 // ========================================
+
 function generarMensajeWhatsApp() {
-
-  let mensaje =
-    "🛒 *NUEVO PEDIDO*%0A";
-
-  mensaje +=
-    "━━━━━━━━━━━━━━%0A%0A";
-
-  carrito.forEach(item => {
-
-    const subtotal =
-      item.precio *
-      item.cantidad;
-
-    mensaje +=
-      `📦 *${item.nombre}*%0A`;
-
-    mensaje +=
-      `Cantidad: ${item.cantidad}%0A`;
-
-    mensaje +=
-      `Subtotal: ${CONFIG.catalogo.moneda}${subtotal}%0A%0A`;
-
-  });
-
-  const total =
-    carrito.reduce(
-      (acc, item) =>
-        acc +
-        (item.precio * item.cantidad),
-      0
-    );
 
   const datos =
     obtenerDatosCliente();
 
-  mensaje +=
-    "━━━━━━━━━━━━━━%0A";
+  let mensaje = `
 
-  mensaje +=
-    `💰 *TOTAL:* ${CONFIG.catalogo.moneda}${total}%0A%0A`;
+🛒 *NUEVO PEDIDO*
+━━━━━━━━━━━━━━
 
-  mensaje +=
-    `👤 *Cliente:* ${datos.nombre}%0A`;
+`;
 
-  mensaje +=
-    `🚚 *Entrega:* ${datos.entrega}%0A`;
+  let total = 0;
+
+  // ========================================
+  // PRODUCTOS
+  // ========================================
+
+  carrito.forEach(item => {
+
+    const producto =
+      obtenerProducto(item.id);
+
+    if (!producto) return;
+
+    const subtotal =
+
+      producto.precio *
+      item.cantidad;
+
+    total += subtotal;
+
+    mensaje += `
+
+📦 *${producto.nombre}*
+
+• Cantidad: ${item.cantidad}
+
+• Precio: ${CONFIG.catalogo.moneda}${producto.precio}
+
+• Subtotal: ${CONFIG.catalogo.moneda}${subtotal}
+
+`;
+
+  });
+
+  // ========================================
+  // TOTAL
+  // ========================================
+
+  mensaje += `
+
+━━━━━━━━━━━━━━
+
+💰 *TOTAL:* ${CONFIG.catalogo.moneda}${total}
+
+`;
+
+  // ========================================
+  // CLIENTE
+  // ========================================
+
+  mensaje += `
+
+👤 *Cliente:* ${datos.nombre}
+
+🚚 *Entrega:* ${datos.entrega}
+
+`;
+
+  // ========================================
+  // DIRECCIÓN
+  // ========================================
 
   if (
     datos.entrega === "delivery"
   ) {
 
-    mensaje +=
-      `📍 *Dirección:* ${datos.direccion}%0A`;
+    mensaje += `
+
+📍 *Dirección:* ${datos.direccion}
+
+`;
 
   }
 
-  mensaje +=
-    "%0AGracias 🙌";
+  // ========================================
+  // FINAL
+  // ========================================
 
-  return mensaje;
+  mensaje += `
+
+Gracias 🙌
+`;
+
+  return encodeURIComponent(
+    mensaje
+  );
 
 }
 
@@ -149,15 +208,20 @@ function generarMensajeWhatsApp() {
 
 function finalizarPedido() {
 
-  if (!validarPedido()) return;
+  if (!validarPedido()) {
 
-  const mensaje =
-    generarMensajeWhatsApp();
+    return;
+
+  }
 
   const telefono =
     CONFIG.negocio.whatsapp;
 
+  const mensaje =
+    generarMensajeWhatsApp();
+
   const url =
+
     `https://wa.me/${telefono}?text=${mensaje}`;
 
   window.open(
