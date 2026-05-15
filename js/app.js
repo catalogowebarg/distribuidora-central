@@ -18,7 +18,7 @@ document.addEventListener(
     CARGAR GOOGLE SHEETS
     ======================================== */
 
-    ;
+    await cargarDatosSheets();
 
     renderizarCategorias();
 
