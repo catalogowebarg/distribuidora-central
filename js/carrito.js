@@ -23,52 +23,65 @@ function guardarCarrito() {
 }
 
 // ========================================
+// OBTENER PRODUCTO
+// ========================================
+
+function obtenerProducto(idProducto) {
+
+  return PRODUCTOS.find(
+    producto =>
+      producto.id === idProducto
+  );
+
+}
+
+// ========================================
 // AGREGAR
 // ========================================
 
 function agregarAlCarrito(idProducto) {
 
   const producto =
-    PRODUCTOS.find(
-      item => item.id === idProducto
-    );
+    obtenerProducto(idProducto);
 
   if (!producto) return;
 
-  const variante =
-    producto.variantes[0];
-
   const itemExistente =
     carrito.find(
-      item => item.id === idProducto
+      item =>
+        item.id === idProducto
     );
+
+  // ========================================
+  // EXISTE
+  // ========================================
 
   if (itemExistente) {
 
     if (
       itemExistente.cantidad <
-      variante.stock
+      producto.stock
     ) {
 
       itemExistente.cantidad++;
 
     }
 
-  } else {
+  }
+
+  // ========================================
+  // NUEVO
+  // ========================================
+
+  else {
 
     carrito.push({
 
-      id: producto.id,
+      id:
+        producto.id,
 
-      nombre: producto.nombre,
-
-      precio: variante.precio,
-
-      imagen: variante.imagen,
-
-      cantidad: 1,
-
-      stock: variante.stock
+      cantidad:
+        1
 
     });
 
@@ -111,6 +124,10 @@ function renderizarCarrito() {
 
   lista.innerHTML = "";
 
+  // ========================================
+  // VACÍO
+  // ========================================
+
   if (carrito.length === 0) {
 
     mensajeVacio.style.display =
@@ -125,11 +142,22 @@ function renderizarCarrito() {
 
   let total = 0;
 
+  // ========================================
+  // ITEMS
+  // ========================================
+
   carrito.forEach(item => {
 
-    total +=
-      item.precio *
+    const producto =
+      obtenerProducto(item.id);
+
+    if (!producto) return;
+
+    const subtotal =
+      producto.precio *
       item.cantidad;
+
+    total += subtotal;
 
     const li =
       document.createElement("li");
@@ -140,25 +168,25 @@ function renderizarCarrito() {
     li.innerHTML = `
 
       <img
-        src="${item.imagen}"
-        alt="${item.nombre}"
+        src="${producto.imagen}"
+        alt="${producto.nombre}"
       >
 
       <div class="info-item">
 
         <h4>
-          ${item.nombre}
+          ${producto.nombre}
         </h4>
 
         <p>
           ${CONFIG.catalogo.moneda}
-          ${item.precio}
+          ${producto.precio}
         </p>
 
         <div class="controles">
 
           <button
-            onclick="disminuirCantidad('${item.id}')"
+            onclick="disminuirCantidad('${producto.id}')"
           >
             -
           </button>
@@ -168,7 +196,7 @@ function renderizarCarrito() {
           </span>
 
           <button
-            onclick="aumentarCantidad('${item.id}')"
+            onclick="aumentarCantidad('${producto.id}')"
           >
             +
           </button>
@@ -183,6 +211,10 @@ function renderizarCarrito() {
 
   });
 
+  // ========================================
+  // TOTAL
+  // ========================================
+
   totalContainer.textContent =
     `Total: ${CONFIG.catalogo.moneda}${total}`;
 
@@ -196,13 +228,21 @@ function aumentarCantidad(idProducto) {
 
   const item =
     carrito.find(
-      item => item.id === idProducto
+      item =>
+        item.id === idProducto
     );
 
-  if (!item) return;
+  const producto =
+    obtenerProducto(idProducto);
 
   if (
-    item.cantidad < item.stock
+    !item ||
+    !producto
+  ) return;
+
+  if (
+    item.cantidad <
+    producto.stock
   ) {
 
     item.cantidad++;
@@ -225,20 +265,32 @@ function disminuirCantidad(idProducto) {
 
   const item =
     carrito.find(
-      item => item.id === idProducto
+      item =>
+        item.id === idProducto
     );
 
   if (!item) return;
+
+  // ========================================
+  // RESTAR
+  // ========================================
 
   if (item.cantidad > 1) {
 
     item.cantidad--;
 
-  } else {
+  }
+
+  // ========================================
+  // ELIMINAR
+  // ========================================
+
+  else {
 
     carrito =
       carrito.filter(
-        item => item.id !== idProducto
+        item =>
+          item.id !== idProducto
       );
 
   }
@@ -268,31 +320,105 @@ function vaciarCarrito() {
 }
 
 // ========================================
-// FINALIZAR
-// ========================================
-
-
-// ========================================
-// CONTADOR
+// CONTADOR + BARRA
 // ========================================
 
 function actualizarContadorCarrito() {
 
-  const contador =
+  const contadorInferior =
     document.getElementById(
-      "contador-carrito"
+      "contador-bottom"
     );
 
-  if (!contador) return;
+  const barra =
+    document.getElementById(
+      "barra-flotante"
+    );
 
-  const total =
+  const barraCantidad =
+    document.getElementById(
+      "barra-cantidad"
+    );
+
+  const barraTotal =
+    document.getElementById(
+      "barra-total"
+    );
+
+  const totalCantidad =
     carrito.reduce(
       (acc, item) =>
         acc + item.cantidad,
       0
     );
 
-  contador.textContent =
-    total;
+  const totalPrecio =
+    carrito.reduce(
+      (acc, item) => {
+
+        const producto =
+          obtenerProducto(item.id);
+
+        if (!producto) return acc;
+
+        return (
+          acc +
+          (
+            producto.precio *
+            item.cantidad
+          )
+        );
+
+      },
+      0
+    );
+
+  // ========================================
+  // CONTADOR NAVBAR
+  // ========================================
+
+  if (contadorInferior) {
+
+    contadorInferior.textContent =
+      totalCantidad;
+
+    contadorInferior.style.display =
+      totalCantidad > 0
+        ? "flex"
+        : "none";
+
+  }
+
+  // ========================================
+  // BARRA FLOTANTE
+  // ========================================
+
+  if (
+    barra &&
+    barraCantidad &&
+    barraTotal
+  ) {
+
+    if (totalCantidad > 0) {
+
+      barra.style.display =
+        "flex";
+
+      barraCantidad.textContent =
+        `${totalCantidad} producto${totalCantidad > 1 ? "s" : ""} en el carrito`;
+
+      barraTotal.textContent =
+        `Total: ${CONFIG.catalogo.moneda}${totalPrecio}`;
+
+    }
+
+    else {
+
+      barra.style.display =
+        "none";
+
+    }
+
+  }
 
 }
