@@ -1,15 +1,41 @@
 // ========================================
-// CARGAR DATOS GOOGLE SHEETS
+// GOOGLE SHEETS
 // ========================================
 
 async function cargarDatosSheets() {
 
+  // ========================================
+  // CONFIG
+  // ========================================
+
+  if (
+    !CONFIG.catalogo.usarGoogleSheets
+  ) {
+
+    return;
+
+  }
+
   try {
 
+    // ========================================
+    // FETCH
+    // ========================================
+
     const respuesta =
-     await fetch(
-  `${CONFIG.catalogo.sheetDB}?nocache=${Date.now()}`
-);
+      await fetch(
+
+        `${CONFIG.catalogo.sheetDB}?nocache=${Date.now()}`,
+
+        {
+          method: "GET"
+        }
+
+      );
+
+    // ========================================
+    // ERROR RESPUESTA
+    // ========================================
 
     if (!respuesta.ok) {
 
@@ -19,8 +45,28 @@ async function cargarDatosSheets() {
 
     }
 
+    // ========================================
+    // JSON
+    // ========================================
+
     const datos =
       await respuesta.json();
+
+    // ========================================
+    // VALIDAR
+    // ========================================
+
+    if (!Array.isArray(datos)) {
+
+      throw new Error(
+        "Formato inválido de Google Sheets"
+      );
+
+    }
+
+    // ========================================
+    // ACTUALIZAR
+    // ========================================
 
     actualizarProductos(
       datos
@@ -31,7 +77,7 @@ async function cargarDatosSheets() {
   catch(error) {
 
     console.error(
-      "Error cargando Sheets:",
+      "Error cargando Google Sheets:",
       error
     );
 
@@ -47,114 +93,165 @@ function actualizarProductos(
   datosSheets
 ) {
 
-  datosSheets.forEach(
-    itemSheet => {
+  if (
+    !Array.isArray(datosSheets)
+  ) return;
 
-      const producto =
-        PRODUCTOS.find(
-          item =>
-            item.id ===
-            itemSheet.id
+  // ========================================
+  // RECORRER
+  // ========================================
+
+  datosSheets.forEach(itemSheet => {
+
+    // ========================================
+    // VALIDAR ID
+    // ========================================
+
+    if (
+      !itemSheet.id ||
+      itemSheet.id.trim() === ""
+    ) {
+
+      return;
+
+    }
+
+    // ========================================
+    // BUSCAR PRODUCTO
+    // ========================================
+
+    const producto =
+      PRODUCTOS.find(
+        item =>
+          item.id === itemSheet.id
+      );
+
+    // ========================================
+    // NO EXISTE
+    // ========================================
+
+    if (!producto) {
+
+      console.warn(
+        `Producto no encontrado: ${itemSheet.id}`
+      );
+
+      return;
+
+    }
+
+    // ========================================
+    // NOMBRE
+    // ========================================
+
+    if (
+      itemSheet.nombre &&
+      itemSheet.nombre.trim() !== ""
+    ) {
+
+      producto.nombre =
+        itemSheet.nombre.trim();
+
+    }
+
+    // ========================================
+    // DESCRIPCIÓN
+    // ========================================
+
+    if (
+      itemSheet.descripcion &&
+      itemSheet.descripcion.trim() !== ""
+    ) {
+
+      producto.descripcion =
+        itemSheet.descripcion.trim();
+
+    }
+
+    // ========================================
+    // CATEGORÍA
+    // ========================================
+
+    if (
+      itemSheet.categoria &&
+      itemSheet.categoria.trim() !== ""
+    ) {
+
+      producto.categoria =
+        itemSheet.categoria.trim();
+
+    }
+
+    // ========================================
+    // PRECIO
+    // ========================================
+
+    if (
+      itemSheet.precio !== ""
+    ) {
+
+      const precio =
+        Number(
+          itemSheet.precio
         );
 
-      // SI NO EXISTE EL PRODUCTO
+      if (!isNaN(precio)) {
 
-      if (!producto) {
-
-        console.warn(
-          `Producto no encontrado: ${itemSheet.id}`
-        );
-
-        return;
-
-      }
-
-      /* ========================================
-      DATOS GENERALES
-      ======================================== */
-
-      if (
-        itemSheet.nombre &&
-        itemSheet.nombre.trim() !== ""
-      ) {
-
-        producto.nombre =
-          itemSheet.nombre;
-
-      }
-
-      if (
-        itemSheet.descripcion &&
-        itemSheet.descripcion.trim() !== ""
-      ) {
-
-        producto.descripcion =
-          itemSheet.descripcion;
-
-      }
-
-      if (
-        itemSheet.categoria &&
-        itemSheet.categoria.trim() !== ""
-      ) {
-
-        producto.categoria =
-          itemSheet.categoria;
-
-      }
-
-      /* ========================================
-      VARIANTE
-      ======================================== */
-
-      const variante =
-        producto.variantes[0];
-
-      // PRECIO
-
-      if (
-        itemSheet.precio !== ""
-      ) {
-
-        variante.precio =
-          Number(
-            itemSheet.precio
-          );
-
-      }
-
-      // STOCK
-
-      if (
-        itemSheet.stock !== ""
-      ) {
-
-        variante.stock =
-          Number(
-            itemSheet.stock
-          );
-
-      }
-
-      // IMAGEN
-
-      if (
-        itemSheet.imagen &&
-        itemSheet.imagen.trim() !== ""
-      ) {
-
-        variante.imagen =
-          itemSheet.imagen;
+        producto.precio =
+          precio;
 
       }
 
     }
-  );
 
+    // ========================================
+    // STOCK
+    // ========================================
+
+    if (
+      itemSheet.stock !== ""
+    ) {
+
+      const stock =
+        Number(
+          itemSheet.stock
+        );
+
+      if (!isNaN(stock)) {
+
+        producto.stock =
+          stock;
+
+      }
+
+    }
+
+    // ========================================
+    // IMAGEN
+    // ========================================
+
+    if (
+      itemSheet.imagen &&
+      itemSheet.imagen.trim() !== ""
+    ) {
+
+      producto.imagen =
+        itemSheet.imagen.trim();
+
+    }
+
+  });
+
+  // ========================================
   // RE-RENDER
+  // ========================================
 
   renderizarCategorias();
 
   renderizarProductos();
+
+  renderizarCarrito();
+
+  actualizarContadorCarrito();
 
 }
