@@ -7,9 +7,9 @@ async function cargarDatosSheets() {
   try {
 
     const respuesta =
-      await fetch(
-        CONFIG.catalogo.sheetDB
-      );
+     await fetch(
+  `${CONFIG.catalogo.sheetDB}?nocache=${Date.now()}`
+);
 
     if (!respuesta.ok) {
 
