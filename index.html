@@ -3,6 +3,10 @@
 
 <head>
 
+  <!-- ========================================
+  META
+  ======================================== -->
+
   <meta charset="UTF-8">
 
   <meta
@@ -10,11 +14,69 @@
     content="width=device-width, initial-scale=1.0"
   >
 
+  <meta
+    name="description"
+    content="Catálogo mayorista de bebidas con pedidos rápidos por WhatsApp."
+  >
+
+  <meta
+    name="theme-color"
+    content="#D9204C"
+  >
+
+  <!-- OPEN GRAPH -->
+
+  <meta
+    property="og:title"
+    content="Distribuidora Central"
+  >
+
+  <meta
+    property="og:description"
+    content="Catálogo mayorista de bebidas."
+  >
+
+  <meta
+    property="og:image"
+    content="img/banners/banner1.jpg"
+  >
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+
+  <!-- TITLE -->
+
   <title>
     Distribuidora Central
   </title>
 
-  <!-- CSS -->
+  <!-- FAVICON -->
+
+  <link
+    rel="icon"
+    href="img/logo/favicon.png"
+  >
+
+  <!-- MANIFEST -->
+
+  <link
+    rel="manifest"
+    href="manifest.json"
+  >
+
+  <!-- PRELOAD -->
+
+  <link
+    rel="preload"
+    as="image"
+    href="img/logo/logo.png"
+  >
+
+  <!-- ========================================
+  CSS
+  ======================================== -->
 
   <link
     rel="stylesheet"
@@ -31,14 +93,18 @@
     href="css/responsive.css"
   >
 
-  <!-- ICONOS -->
+  <!-- ========================================
+  ICONOS
+  ======================================== -->
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   >
 
-  <!-- FUENTE -->
+  <!-- ========================================
+  FUENTES
+  ======================================== -->
 
   <link
     rel="preconnect"
@@ -60,15 +126,15 @@
 
 <body>
 
-  <!-- ======================================== -->
-  <!-- APP -->
-  <!-- ======================================== -->
+  <!-- ========================================
+  APP
+  ======================================== -->
 
   <div id="app">
 
-    <!-- ======================================== -->
-    <!-- HEADER -->
-    <!-- ======================================== -->
+    <!-- ========================================
+    HEADER
+    ======================================== -->
 
     <header class="header-premium">
 
@@ -82,8 +148,9 @@
 
           <img
             src="img/logo/logo.png"
-            alt="Logo"
+            alt="Logo del negocio"
             class="logo"
+            loading="eager"
           >
 
           <div class="negocio-info">
@@ -100,19 +167,16 @@
 
         </div>
 
-        <!-- CARRITO -->
+        <!-- MENÚ -->
 
         <button
-          id="btn-carrito"
+          id="menu-btn"
           type="button"
-          class="cart-btn"
+          class="menu-btn"
+          aria-label="Abrir menú"
         >
 
-          <i class="fa-solid fa-cart-shopping"></i>
-
-          <span id="contador-carrito">
-            0
-          </span>
+          <i class="fa-solid fa-bars"></i>
 
         </button>
 
@@ -129,235 +193,294 @@
           id="buscador"
           placeholder="Buscar productos..."
           autocomplete="off"
+          enterkeyhint="search"
         >
 
       </div>
 
     </header>
 
-    <!-- ======================================== -->
-    <!-- CATEGORÍAS -->
-    <!-- ======================================== -->
+    <!-- ========================================
+    MENÚ LATERAL
+    ======================================== -->
 
-    <section
-      id="categorias"
-      class="categorias categorias-premium"
+    <aside
+      id="menu-lateral"
+      class="menu-lateral"
     >
+
+      <div class="menu-header">
+
+        <h3>
+          Menú
+        </h3>
+
+        <button
+          id="cerrar-menu"
+          class="cerrar-menu"
+          type="button"
+          aria-label="Cerrar menú"
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+      </div>
+
+      <nav class="menu-links">
+
+        <a href="index.html">
+
+          <i class="fa-solid fa-house"></i>
+
+          Inicio
+
+        </a>
+
+        <a href="pages/faq.html">
+
+          <i class="fa-solid fa-circle-question"></i>
+
+          FAQ
+
+        </a>
+
+        <a href="pages/contacto.html">
+
+          <i class="fa-solid fa-envelope"></i>
+
+          Contacto
+
+        </a>
+
+      </nav>
+
+    </aside>
+
+    <!-- OVERLAY MENU -->
+
+    <div
+      id="overlay-menu"
+      class="overlay-menu"
+    >
+    </div>
+
+    <!-- ========================================
+    SLIDER
+    ======================================== -->
+
+    <section class="slider-promos">
+
+      <!-- IZQUIERDA -->
+
+      <button
+        class="slider-arrow prev"
+        type="button"
+        aria-label="Banner anterior"
+      >
+
+        <i class="fa-solid fa-chevron-left"></i>
+
+      </button>
+
+      <!-- CONTENEDOR -->
+
+      <div class="slider-container">
+
+        <div class="slider-track">
+
+          <img
+            src="img/banners/banner1.jpg"
+            alt="Banner promocional 1"
+            loading="lazy"
+          >
+
+          <img
+            src="img/banners/banner2.jpg"
+            alt="Banner promocional 2"
+            loading="lazy"
+          >
+
+          <img
+            src="img/banners/banner3.jpg"
+            alt="Banner promocional 3"
+            loading="lazy"
+          >
+
+        </div>
+
+      </div>
+
+      <!-- DERECHA -->
+
+      <button
+        class="slider-arrow next"
+        type="button"
+        aria-label="Siguiente banner"
+      >
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+      </button>
+
+      <!-- DOTS -->
+
+      <div class="slider-dots">
+
+        <span class="dot active"></span>
+
+        <span class="dot"></span>
+
+        <span class="dot"></span>
+
+      </div>
+
     </section>
 
-    <!-- ======================================== -->
-    <!-- SLIDER -->
-    <!-- ======================================== -->
 
-   <!-- ======================================== -->
-<!-- SLIDER -->
-<!-- ======================================== -->
+<!-- ========================================
+BENEFICIOS
+======================================== -->
 
-<section class="slider-promos">
+<section class="beneficios">
 
-  <!-- FLECHA IZQUIERDA -->
+  <!-- ENVÍOS -->
 
-  <button
-    class="slider-arrow prev"
-    type="button"
-  >
+  <article class="beneficio-card">
 
-    <i class="fa-solid fa-chevron-left"></i>
+    <div class="beneficio-icon">
 
-  </button>
-
-  <!-- CONTENEDOR -->
-
-  <div class="slider-container">
-
-    <div class="slider-track">
-
-      <!-- BANNER 1 -->
-
-      <img
-        src="img/banners/banner1.jpg"
-        alt="Banner 1"
-      >
-
-      <!-- BANNER 2 -->
-
-      <img
-        src="img/banners/banner2.jpg"
-        alt="Banner 2"
-      >
-
-      <!-- BANNER 3 -->
-
-      <img
-        src="img/banners/banner3.jpg"
-        alt="Banner 3"
-      >
+      <i class="fa-solid fa-truck"></i>
 
     </div>
 
-  </div>
+    <div>
 
-  <!-- FLECHA DERECHA -->
+      <h4>
+        Envíos rápidos
+      </h4>
 
-  <button
-    class="slider-arrow next"
-    type="button"
-  >
+      <p>
+        En CABA y GBA
+      </p>
 
-    <i class="fa-solid fa-chevron-right"></i>
+    </div>
 
-  </button>
+  </article>
 
-  <!-- INDICADORES -->
+  <!-- PRECIOS -->
 
-  <div class="slider-dots">
+  <article class="beneficio-card">
 
-    <span class="dot active"></span>
+    <div class="beneficio-icon">
 
-    <span class="dot"></span>
+      <i class="fa-solid fa-circle-dollar-to-slot"></i>
 
-    <span class="dot"></span>
+    </div>
 
-  </div>
+    <div>
+
+      <h4>
+        Precios mayoristas
+      </h4>
+
+      <p>
+        Las mejores ofertas
+      </p>
+
+    </div>
+
+  </article>
+
+  <!-- STOCK -->
+
+  <article class="beneficio-card">
+
+    <div class="beneficio-icon">
+
+      <i class="fa-solid fa-boxes-stacked"></i>
+
+    </div>
+
+    <div>
+
+      <h4>
+        Stock actualizado
+      </h4>
+
+      <p>
+        En tiempo real
+      </p>
+
+    </div>
+
+  </article>
+
+  <!-- ATENCIÓN -->
+
+  <article class="beneficio-card">
+
+    <div class="beneficio-icon">
+
+      <i class="fa-solid fa-headset"></i>
+
+    </div>
+
+    <div>
+
+      <h4>
+        Atención rápida
+      </h4>
+
+      <p>
+        Por WhatsApp
+      </p>
+
+    </div>
+
+  </article>
 
 </section>
 
-    <!-- ======================================== -->
-    <!-- BENEFICIOS -->
-    <!-- ======================================== -->
+<!-- ========================================
+CATEGORÍAS
+======================================== -->
 
-    <section class="beneficios">
+<section
+  id="categorias"
+  class="categorias categorias-premium categorias-slider"
+>
+</section>
 
-      <!-- ENVÍOS -->
+<!-- ========================================
+TÍTULO PRODUCTOS
+======================================== -->
 
-      <div class="beneficio-card">
+<section class="titulo-seccion-productos">
 
-        <div class="beneficio-icon">
+      <div class="titulo-linea"></div>
 
-          <i class="fa-solid fa-truck"></i>
+      <div class="titulo-info">
 
-        </div>
-
-        <div>
-
-          <h4>
-            Envíos rápidos
-          </h4>
-
-          <p>
-            En CABA y GBA
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- PRECIOS -->
-
-      <div class="beneficio-card">
-
-        <div class="beneficio-icon">
-
-          <i class="fa-solid fa-circle-dollar-to-slot"></i>
-
-        </div>
-
-        <div>
-
-          <h4>
-            Precios mayoristas
-          </h4>
-
-          <p>
-            Las mejores ofertas
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- STOCK -->
-
-      <div class="beneficio-card">
-
-        <div class="beneficio-icon">
-
-          <i class="fa-solid fa-boxes-stacked"></i>
-
-        </div>
-
-        <div>
-
-          <h4>
-            Stock actualizado
-          </h4>
-
-          <p>
-            En tiempo real
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- ATENCIÓN -->
-
-      <div class="beneficio-card">
-
-        <div class="beneficio-icon">
-
-          <i class="fa-solid fa-headset"></i>
-
-        </div>
-
-        <div>
-
-          <h4>
-            Atención rápida
-          </h4>
-
-          <p>
-            Por WhatsApp
-          </p>
-
-        </div>
+        <h4 id="titulo-categoria">
+          Las mejores marcas para tu negocio
+        </h4>
 
       </div>
 
     </section>
 
-    <div>
-
-      <div>
-
-
-    <!-- ======================================== -->
-    <!-- PRODUCTOS -->
-    <!-- ======================================== -->
-<!-- ======================================== -->
-<!-- TÍTULO SECCIÓN -->
-<!-- ======================================== -->
-
-<section class="titulo-seccion-productos">
-
-  <div class="titulo-linea"></div>
-
-  <div class="titulo-info">
-
-    <h4 id="titulo-categoria">
-      Las mejores marcas para tu negocio
-    </h4>
-
-  </div>
-
-</section>
+    <!-- ========================================
+    PRODUCTOS
+    ======================================== -->
 
     <main id="productos">
     </main>
 
-    <!-- ======================================== -->
-    <!-- DATOS CLIENTE -->
-    <!-- ======================================== -->
+    <!-- ========================================
+    DATOS CLIENTE
+    ======================================== -->
 
     <section id="datos-cliente">
 
@@ -365,13 +488,16 @@
         Datos del pedido
       </h2>
 
+      <!-- NOMBRE -->
+
       <input
         type="text"
         id="nombre-cliente"
         placeholder="Tu nombre"
+        autocomplete="name"
       >
 
-      <!-- OPCIONES -->
+      <!-- ENTREGA -->
 
       <div class="opciones-entrega">
 
@@ -413,6 +539,7 @@
           type="text"
           id="direccion-cliente"
           placeholder="Dirección de entrega"
+          autocomplete="street-address"
         >
 
       </div>
@@ -421,9 +548,9 @@
 
   </div>
 
-  <!-- ======================================== -->
-  <!-- OVERLAY -->
-  <!-- ======================================== -->
+  <!-- ========================================
+  OVERLAY CARRITO
+  ======================================== -->
 
   <div
     id="overlay-carrito"
@@ -431,9 +558,9 @@
   >
   </div>
 
-  <!-- ======================================== -->
-  <!-- CARRITO -->
-  <!-- ======================================== -->
+  <!-- ========================================
+  CARRITO
+  ======================================== -->
 
   <section
     id="seccion-carrito"
@@ -448,14 +575,29 @@
         🛒 Pedido
       </h2>
 
-      <button
-        id="btn-vaciar"
-        type="button"
-      >
+      <div class="carrito-header-actions">
 
-        Vaciar
+        <button
+          id="btn-vaciar"
+          type="button"
+        >
 
-      </button>
+          Vaciar
+
+        </button>
+
+        <button
+          id="cerrar-carrito"
+          type="button"
+          class="cerrar-carrito"
+          aria-label="Cerrar carrito"
+        >
+
+          <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+      </div>
 
     </div>
 
@@ -495,9 +637,9 @@
 
   </section>
 
-  <!-- ======================================== -->
-  <!-- FOOTER -->
-  <!-- ======================================== -->
+  <!-- ========================================
+  FOOTER
+  ======================================== -->
 
   <footer class="footer">
 
@@ -523,9 +665,45 @@
 
   </footer>
 
-  <!-- ======================================== -->
-  <!-- NAVBAR -->
-  <!-- ======================================== -->
+  <!-- ========================================
+  BARRA FLOTANTE
+  ======================================== -->
+
+  <div
+    id="barra-flotante"
+    class="barra-flotante"
+  >
+
+    <div class="barra-info">
+
+      <span id="barra-cantidad">
+
+        0 productos
+
+      </span>
+
+      <strong id="barra-total">
+
+        Total: $0
+
+      </strong>
+
+    </div>
+
+    <button
+      id="barra-ver-carrito"
+      type="button"
+    >
+
+      Ver carrito
+
+    </button>
+
+  </div>
+
+  <!-- ========================================
+  NAVBAR
+  ======================================== -->
 
   <nav class="bottom-nav">
 
@@ -579,12 +757,23 @@
     <!-- CARRITO -->
 
     <button
-      class="bottom-btn"
+      class="bottom-btn bottom-cart"
       id="bottom-cart-btn"
       type="button"
     >
 
-      <i class="fa-solid fa-cart-shopping"></i>
+      <div class="bottom-cart-icon">
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span
+          id="contador-bottom"
+          class="contador-bottom"
+        >
+          0
+        </span>
+
+      </div>
 
       <span>
         Carrito
@@ -594,235 +783,44 @@
 
   </nav>
 
-  <!-- ======================================== -->
-  <!-- SCRIPTS -->
-  <!-- ======================================== -->
-
-  <script src="config/config.js"></script>
-
-  <script src="js/productos.js"></script>
-
-  <script src="js/categorias.js"></script>
-
-  <script src="js/carrito.js"></script>
-
-  <script src="js/stock.js"></script>
-
-  <script src="js/whatsapp.js"></script>
-
-  <script src="js/app.js"></script>
-
-  <!-- ======================================== -->
-  <!-- NAVBAR FUNCIONAL -->
-  <!-- ======================================== -->
-
-  <script>
-
-    /* ========================================
-    BUSCADOR
-    ======================================== */
-
-    const btnBuscarNav =
-      document.getElementById(
-        "btn-buscar-nav"
-      );
-
-    const buscador =
-      document.getElementById(
-        "buscador"
-      );
-
-    if(
-      btnBuscarNav &&
-      buscador
-    ){
-
-      btnBuscarNav.addEventListener(
-        "click",
-        () => {
-
-          buscador.scrollIntoView({
-
-            behavior:"smooth",
-
-            block:"center"
-
-          });
-
-          setTimeout(() => {
-
-            buscador.focus();
-
-          },400);
-
-        }
-      );
-
-    }
-
-    /* ========================================
-    CATEGORÍAS
-    ======================================== */
-
-    const btnCategoriasNav =
-      document.getElementById(
-        "btn-categorias-nav"
-      );
-
-    const categorias =
-      document.getElementById(
-        "categorias"
-      );
-
-    if(
-      btnCategoriasNav &&
-      categorias
-    ){
-
-      btnCategoriasNav.addEventListener(
-        "click",
-        () => {
-
-          categorias.scrollIntoView({
-
-            behavior:"smooth",
-
-            block:"center"
-
-          });
-
-          categorias.classList.add(
-            "categorias-highlight"
-          );
-
-          setTimeout(() => {
-
-            categorias.classList.remove(
-              "categorias-highlight"
-            );
-
-          },1200);
-
-        }
-      );
-
-    }
-
-  </script>
-
   <!-- ========================================
-SLIDER SCRIPT
-======================================== -->
+  SCRIPTS
+  ======================================== -->
 
-<script>
+  <script
+    src="config/config.js"
+    defer
+  ></script>
 
-const track =
-  document.querySelector(
-    ".slider-track"
-  );
+  <script
+    src="js/productos.js"
+    defer
+  ></script>
 
-const slides =
-  document.querySelectorAll(
-    ".slider-track img"
-  );
+  <script
+    src="js/categorias.js"
+    defer
+  ></script>
 
-const dots =
-  document.querySelectorAll(
-    ".dot"
-  );
+  <script
+    src="js/carrito.js"
+    defer
+  ></script>
 
-const prevBtn =
-  document.querySelector(
-    ".prev"
-  );
+  <script
+    src="js/stock.js"
+    defer
+  ></script>
 
-const nextBtn =
-  document.querySelector(
-    ".next"
-  );
+  <script
+    src="js/whatsapp.js"
+    defer
+  ></script>
 
-let index = 0;
-
-/* ========================================
-ACTUALIZAR SLIDER
-======================================== */
-
-function updateSlider(){
-
-  track.style.transform =
-    `translateX(-${index * 100}%)`;
-
-  dots.forEach(dot =>
-    dot.classList.remove("active")
-  );
-
-  dots[index].classList.add(
-    "active"
-  );
-
-}
-
-/* ========================================
-SIGUIENTE
-======================================== */
-
-function nextSlide(){
-
-  index++;
-
-  if(index >= slides.length){
-
-    index = 0;
-
-  }
-
-  updateSlider();
-
-}
-
-/* ========================================
-ANTERIOR
-======================================== */
-
-function prevSlide(){
-
-  index--;
-
-  if(index < 0){
-
-    index =
-      slides.length - 1;
-
-  }
-
-  updateSlider();
-
-}
-
-/* ========================================
-BOTONES
-======================================== */
-
-nextBtn.addEventListener(
-  "click",
-  nextSlide
-);
-
-prevBtn.addEventListener(
-  "click",
-  prevSlide
-);
-
-/* ========================================
-AUTO PLAY
-======================================== */
-
-setInterval(
-  nextSlide,
-  4000
-);
-
-</script>
+  <script
+    src="js/app.js"
+    defer
+  ></script>
 
 </body>
 
