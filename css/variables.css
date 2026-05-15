@@ -1,14 +1,23 @@
 :root {
 
-  /* COLORES */
+  /* ========================================
+  COLORES
+  ======================================== */
 
-  --color-principal: #D9204C;
+  --color-principal:
+    #D9204C;
 
   --color-principal-hover:
     #b9183f;
 
   --color-secundario:
     #F8F7F5;
+
+  --color-fondo:
+    #f4f5f7;
+
+  --color-surface:
+    #ffffff;
 
   --color-texto:
     #222222;
@@ -19,34 +28,156 @@
   --color-borde:
     #e5e5e5;
 
-  --color-white:
-    #ffffff;
+  --color-overlay:
+    rgba(0,0,0,0.45);
 
   --color-stock:
-    #2e7d32;
+    #080403;
 
   --color-sin-stock:
     #c62828;
 
-  /* RADIOS */
+  /* ========================================
+  TIPOGRAFÍA
+  ======================================== */
 
-  --radius-sm: 10px;
+  --font-principal:
+    "Poppins",
+    sans-serif;
 
-  --radius-md: 16px;
+  --text-xs:
+    12px;
 
-  --radius-lg: 22px;
+  --text-sm:
+    14px;
 
-  /* SHADOWS */
+  --text-md:
+    16px;
+
+  --text-lg:
+    18px;
+
+  --text-xl:
+    24px;
+
+  --line-height:
+    1.4;
+
+  /* ========================================
+  SPACING
+  ======================================== */
+
+  --space-1:
+    4px;
+
+  --space-2:
+    8px;
+
+  --space-3:
+    12px;
+
+  --space-4:
+    16px;
+
+  --space-5:
+    20px;
+
+  --space-6:
+    24px;
+
+  --space-7:
+    32px;
+
+  /* ========================================
+  RADIOS
+  ======================================== */
+
+  --radius-sm:
+    10px;
+
+  --radius-md:
+    16px;
+
+  --radius-lg:
+    22px;
+
+  --radius-full:
+    999px;
+
+  /* ========================================
+  SHADOWS
+  ======================================== */
 
   --shadow-soft:
-    0 4px 12px rgba(0, 0, 0, 0.08);
+    0 4px 12px rgba(
+      0,
+      0,
+      0,
+      0.08
+    );
 
   --shadow-hover:
-    0 8px 18px rgba(0, 0, 0, 0.12);
+    0 8px 18px rgba(
+      0,
+      0,
+      0,
+      0.12
+    );
 
-  /* TRANSITIONS */
+  --shadow-floating:
+    0 10px 30px rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
+
+  /* ========================================
+  TRANSITIONS
+  ======================================== */
+
+  --transition-fast:
+    0.15s ease;
 
   --transition:
-    all 0.2s ease;
+    0.25s ease;
+
+  --transition-slow:
+    0.4s ease;
+
+  /* ========================================
+  LAYOUT
+  ======================================== */
+
+  --container-width:
+    1200px;
+
+  --navbar-height:
+    72px;
+
+  --bottom-nav-height:
+    72px;
+
+  /* ========================================
+  Z-INDEX
+  ======================================== */
+
+  --z-header:
+    100;
+
+  --z-overlay:
+    900;
+
+  --z-menu:
+    950;
+
+  --z-cart:
+    960;
+
+  --z-floating:
+    970;
+
+  --z-modal:
+    999;
 
 }
