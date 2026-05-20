@@ -644,7 +644,7 @@ IMAGEN
 
   object-fit:contain;
 
-  background:#fafafa;
+  background:(255, 255, 255);
 
   padding:12px;
 
