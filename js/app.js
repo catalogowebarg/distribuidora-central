@@ -276,6 +276,8 @@ function inicializarEventos() {
 
   inicializarEntrega();
 
+  inicializarBottomNav();
+
 }
 
 // ========================================
@@ -983,5 +985,87 @@ let touchEndX = 0;
   iniciarAutoplay();
 
 }
-  
+  // ========================================
+// BOTTOM NAV
+// ========================================
+
+function inicializarBottomNav() {
+
+  // ========================================
+  // BOTÓN CATEGORÍAS
+  // ========================================
+
+  const btnCategorias =
+    document.getElementById(
+      "btn-categorias-nav"
+    );
+
+  if (btnCategorias) {
+
+    btnCategorias.addEventListener(
+      "click",
+      () => {
+
+        const categorias =
+          document.getElementById(
+            "categorias"
+          );
+
+        if (!categorias) return;
+
+        categorias.scrollIntoView({
+
+          behavior: "smooth",
+
+          block: "start"
+
+        });
+
+      }
+    );
+
+  }
+
+  // ========================================
+  // BOTÓN BUSCAR
+  // ========================================
+
+  const btnBuscar =
+    document.getElementById(
+      "btn-buscar-nav"
+    );
+
+  if (btnBuscar) {
+
+    btnBuscar.addEventListener(
+      "click",
+      () => {
+
+        const buscador =
+          document.getElementById(
+            "buscador"
+          );
+
+        if (!buscador) return;
+
+        buscador.scrollIntoView({
+
+          behavior: "smooth",
+
+          block: "center"
+
+        });
+
+        setTimeout(() => {
+
+          buscador.focus();
+
+        }, 400);
+
+      }
+    );
+
+  }
+
+}
 
