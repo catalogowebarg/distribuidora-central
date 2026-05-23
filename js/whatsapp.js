@@ -1,5 +1,5 @@
 // ========================================
-// OBTENER DATOS CLIENTE
+// DATOS DEL CLIENTE
 // ========================================
 
 function obtenerDatosCliente() {
@@ -44,12 +44,10 @@ function obtenerDatosCliente() {
 }
 
 // ========================================
-// VALIDAR PEDIDO
+// VALIDACIÓN
 // ========================================
 
 function validarPedido() {
-
-  // CARRITO
 
   if (carrito.length === 0) {
 
@@ -64,8 +62,6 @@ function validarPedido() {
   const datos =
     obtenerDatosCliente();
 
-  // NOMBRE
-
   if (!datos.nombre) {
 
     alert(
@@ -75,8 +71,6 @@ function validarPedido() {
     return false;
 
   }
-
-  // DIRECCIÓN
 
   if (
 
@@ -98,31 +92,59 @@ function validarPedido() {
 }
 
 // ========================================
-// GENERAR MENSAJE
+// CALCULAR TOTAL
 // ========================================
 
-function generarMensajeWhatsApp() {
+function calcularTotalPedido() {
 
-  const datos =
-    obtenerDatosCliente();
+  return carrito.reduce(
 
-  let mensaje = `
+    (total, item) => {
 
-🛒 *NUEVO PEDIDO*
-━━━━━━━━━━━━━━
+      const producto =
+        obtenerProducto(
+          item.id
+        );
 
-`;
+      if (!producto) {
 
-  let total = 0;
+        return total;
 
-  // ========================================
-  // PRODUCTOS
-  // ========================================
+      }
+
+      return (
+
+        total +
+
+        (
+          producto.precio *
+          item.cantidad
+        )
+
+      );
+
+    },
+
+    0
+
+  );
+
+}
+
+// ========================================
+// GENERAR BLOQUE PRODUCTOS
+// ========================================
+
+function generarBloqueProductos() {
+
+  let texto = "";
 
   carrito.forEach(item => {
 
     const producto =
-      obtenerProducto(item.id);
+      obtenerProducto(
+        item.id
+      );
 
     if (!producto) return;
 
@@ -131,9 +153,7 @@ function generarMensajeWhatsApp() {
       producto.precio *
       item.cantidad;
 
-    total += subtotal;
-
-    mensaje += `
+    texto += `
 
 📦 *${producto.nombre}*
 
@@ -146,6 +166,36 @@ function generarMensajeWhatsApp() {
 `;
 
   });
+
+  return texto;
+
+}
+
+// ========================================
+// GENERAR MENSAJE
+// ========================================
+
+function generarMensajeWhatsApp() {
+
+  const datos =
+    obtenerDatosCliente();
+
+  const total =
+    calcularTotalPedido();
+
+  let mensaje = `
+
+🛒 *NUEVO PEDIDO*
+━━━━━━━━━━━━━━
+
+`;
+
+  // ========================================
+  // PRODUCTOS
+  // ========================================
+
+  mensaje +=
+    generarBloqueProductos();
 
   // ========================================
   // TOTAL
@@ -203,16 +253,10 @@ Gracias 🙌
 }
 
 // ========================================
-// FINALIZAR PEDIDO
+// URL WHATSAPP
 // ========================================
 
-function finalizarPedido() {
-
-  if (!validarPedido()) {
-
-    return;
-
-  }
+function obtenerUrlWhatsApp() {
 
   const telefono =
     CONFIG.negocio.whatsapp;
@@ -220,13 +264,30 @@ function finalizarPedido() {
   const mensaje =
     generarMensajeWhatsApp();
 
-  const url =
+  return `https://wa.me/${telefono}?text=${mensaje}`;
 
-    `https://wa.me/${telefono}?text=${mensaje}`;
+}
+
+// ========================================
+// FINALIZAR PEDIDO
+// ========================================
+
+function finalizarPedido() {
+
+  if (
+    !validarPedido()
+  ) {
+
+    return;
+
+  }
 
   window.open(
-    url,
+
+    obtenerUrlWhatsApp(),
+
     "_blank"
+
   );
 
 }
