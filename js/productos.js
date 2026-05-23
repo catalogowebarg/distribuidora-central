@@ -2,136 +2,101 @@
 // PRODUCTOS BASE
 // ========================================
 //
-// Este archivo define:
+// Este archivo contiene:
 //
-// ✔ ids
-// ✔ categorías
-// ✔ imágenes fallback
-// ✔ estructura del catálogo
+// • Estructura principal del catálogo
+// • IDs únicos de productos
+// • Categorías base
+// • Imágenes fallback
+// • Datos iniciales de respaldo
 //
-// Google Sheets actualiza:
+// Google Sheets puede sobrescribir:
 //
-// ✔ precio
-// ✔ stock
-// ✔ descripción
-// ✔ nombre (opcional)
+// • nombre
+// • descripción
+// • categoría
+// • precio
+// • stock
+// • imagen
 //
+// ========================================
+
+// ========================================
+// CATÁLOGO BASE
 // ========================================
 
 const PRODUCTOS = [
 
   // ========================================
-  // MILLER
+  // CERVEZAS
   // ========================================
 
   {
+    id: "miller-473",
 
-    id:
-      "miller-473",
+    nombre: "MILLER",
 
-    nombre:
-      "MILLER",
+    categoria: "Cervezas",
 
-    categoria:
-      "Cervezas",
+    imagen: "img/productos/miller.jpg",
 
-    imagen:
-      "img/productos/miller.jpg",
+    descripcion: "Cajón x12 botellas",
 
-    // ========================================
-    // FALLBACKS
-    // ========================================
+    precio: 42000,
 
-    descripcion:
-      "Cajón x12 botellas",
+    stock: 10
+  },
 
-    precio:
-      42000,
+  {
+    id: "brahma-473",
 
-    stock:
-      10
+    nombre: "BRAHMA 473ML",
 
+    categoria: "Cervezas",
+
+    imagen: "img/productos/brahma.jpg",
+
+    descripcion: "Cajón x12 botellas",
+
+    precio: 2200,
+
+    stock: 6
   },
 
   // ========================================
-  // COCA COLA
+  // GASEOSAS
   // ========================================
 
   {
+    id: "coca-225",
 
-    id:
-      "coca-225",
+    nombre: "COCA-COLA 2.25L",
 
-    nombre:
-      "COCA-COLA 2.25L",
+    categoria: "Linea Coca Cola",
 
-    categoria:
-      "Linea Coca Cola",
+    imagen: "img/productos/coca-225.jpg",
 
-    imagen:
-      "img/productos/coca-225.jpg",
+    descripcion: "Pack x8 unidades",
 
-    // ========================================
-    // FALLBACKS
-    // ========================================
+    precio: 3500,
 
-    descripcion:
-      "Pack x8 unidades",
-
-    precio:
-      3500,
-
-    stock:
-      8
-
-  },
-
-  // ========================================
-  // BRAHMA
-  // ========================================
-
-  {
-
-    id:
-      "brahma-473",
-
-    nombre:
-      "BRAHMA 473ML",
-
-    categoria:
-      "Cervezas",
-
-    imagen:
-      "img/productos/brahma.jpg",
-
-    // ========================================
-    // FALLBACKS
-    // ========================================
-
-    descripcion:
-      "Cajón x12 botellas",
-
-    precio:
-      2200,
-
-    stock:
-      6
-
+    stock: 8
   }
 
 ];
 
 // ========================================
-// OBTENER PRODUCTO
+// NOTA IMPORTANTE
 // ========================================
-
-function obtenerProducto(
-  id
-) {
-
-  return PRODUCTOS.find(
-    producto =>
-      producto.id === id
-  );
-
-}
+//
+// La función:
+//
+// obtenerProducto()
+//
+// Se mantiene actualmente en carrito.js.
+//
+// Más adelante será movida a un
+// archivo utilitario compartido para
+// evitar duplicaciones entre módulos.
+//
+// ========================================
