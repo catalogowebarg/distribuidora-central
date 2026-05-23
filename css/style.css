@@ -19,8 +19,7 @@ html{
 /* ========================================
 BODY
 ======================================== */
-
-body{
+  body{
 
   font-family:
     'Poppins',
@@ -40,6 +39,8 @@ body{
 
   padding-bottom:90px;
 
+  min-height:100vh;
+
 }
 
 /* ========================================
@@ -52,9 +53,12 @@ APP
 
   max-width:480px;
 
-  margin:auto;
+  margin:0 auto;
 
-  padding:0 12px 24px;
+  padding:
+    0
+    12px
+    24px;
 
 }
 
@@ -66,9 +70,9 @@ HEADER
 
   background:
     linear-gradient(
-      135deg,
-      #032b13,
-      #165530
+      160deg,
+      var(--color-principal),
+      var(--color-principal-hover)
     );
 
   padding:16px;
@@ -76,10 +80,15 @@ HEADER
   border-bottom-left-radius:28px;
   border-bottom-right-radius:28px;
 
-  margin-bottom:14px;
+  margin-bottom:16px;
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.12);
+    0 10px 30px rgba(
+      0,
+      0,
+      0,
+      0.12
+    );
 
 }
 
@@ -268,10 +277,9 @@ CARRITO
 
   border-radius:50%;
 
-  background:white;
+ background:var(--color-surface);
 
-  color:#064420;
-
+color:var(--color-principal);
   font-size:10px;
 
   font-weight:700;
@@ -356,46 +364,8 @@ CATEGORÍAS DEBAJO DEL SLIDER
 }
 
 .categoria-activa{
-
-  background:#064420 !important;
-
-  color:white !important;
-
-}
-
-/* ========================================
-SLIDER
-======================================== */
-
-.slider-promos{
-
-  position:relative;
-
-  margin-bottom:18px;
-
-}
-
-.slider-container{
-
-  overflow:hidden;
-
-  border-radius:24px;
-
-  box-shadow:
-    0 6px 20px rgba(0,0,0,0.08);
-
-}
-
-.slider-container img{
-
-  width:100%;
-
-  height:170px;
-
-  object-fit:cover;
-
-  display:block;
-
+  background:var(--color-principal) !important;
+  color:var(--color-texto-invertido) !important;
 }
 
 /* ========================================
@@ -503,7 +473,7 @@ ICONO
 
   margin-bottom:10px;
 
-  color:#0b5d2a;
+  color:var(--color-principal);
 
   font-size:26px;
 
@@ -521,7 +491,7 @@ TEXTO
 
   font-weight:700;
 
-  color:#111;
+  color:var(--color-texto);
 
   margin-bottom:4px;
 
@@ -533,7 +503,7 @@ TEXTO
 
   line-height:1.2;
 
-  color:#777;
+  color:var(--color-texto-soft);
 
 }
 /* ========================================
@@ -555,11 +525,11 @@ TÍTULO SECCIÓN PRODUCTOS
   border-radius:999px;
 
   background:
-    linear-gradient(
-      90deg,
-      #063b18,
-      #0f6b2f
-    );
+   linear-gradient(
+  90deg,
+  var(--color-principal),
+  var(--color-principal-hover)
+);
 
   margin-bottom:10px;
 
@@ -571,7 +541,7 @@ TÍTULO SECCIÓN PRODUCTOS
 
   font-weight:700;
 
-  color:#111;
+   color:var(--color-texto);
 
   margin-bottom:2px;
 
@@ -583,7 +553,7 @@ TÍTULO SECCIÓN PRODUCTOS
 
   font-size:13px;
 
-  color:#777;
+   color:var(--color-texto-soft);
 
 }
 
@@ -644,12 +614,11 @@ IMAGEN
 
   object-fit:contain;
 
-  background:(255, 255, 255);
+  background:#fff;
 
   padding:12px;
 
 }
-
 /* ========================================
 CONTENIDO
 ======================================== */
@@ -684,7 +653,7 @@ NOMBRE
 
   font-weight:700;
 
-  color:#111;
+   color:var(--color-texto);
 
   margin-bottom:4px;
 
@@ -732,7 +701,8 @@ PRECIO Y STOCK
 
   font-weight:700;
 
-  color:#111;
+  color:var(--color-texto);
+
 
 }
 
@@ -740,7 +710,7 @@ PRECIO Y STOCK
 
   font-size:12px;
 
-  color:#13853d;
+  color:var(--color-exito);
 
   font-weight:700;
 
@@ -764,10 +734,10 @@ BOTÓN PRODUCTO
 
   background:
     linear-gradient(
-      90deg,
-      #063b18,
-      #0f6b2f
-    );
+  90deg,
+  var(--color-principal),
+  var(--color-principal-hover)
+);
 
   color:white;
 
@@ -1184,10 +1154,10 @@ FINALIZAR
 
   background:
     linear-gradient(
-      90deg,
-      #063b18,
-      #0f6b2f
-    );
+  90deg,
+  var(--color-principal),
+  var(--color-principal-hover)
+);
 
   color:white;
 
@@ -1581,13 +1551,9 @@ DOTS
 }
 
 .dot.active{
-
   width:22px;
-
   border-radius:999px;
-
-  background:#064420;
-
+  background:var(--color-principal);
 }
 /* ========================================
 MENU BUTTON
@@ -1708,7 +1674,7 @@ LINKS MENU
 
   text-decoration:none;
 
-  color:#111;
+  color:var(--color-texto);
 
   background:#f8f8f8;
 
@@ -1799,9 +1765,9 @@ CONTADOR
 
   border-radius:50%;
 
-  background:#ff2f68;
+  background:var(--color-principal);
 
-  color:white;
+    color:var(--color-texto-invertido);
 
   font-size:10px;
 
@@ -1833,10 +1799,10 @@ BARRA FLOTANTE
 
   background:
     linear-gradient(
-      90deg,
-      #063b18,
-      #0f6b2f
-    );
+  90deg,
+  var(--color-principal),
+  var(--color-principal-hover)
+);
 
   border-radius:18px;
 
@@ -1899,7 +1865,7 @@ BOTÓN
 
   background:white;
 
-  color:#063b18;
+   color:var(--color-principal);
 
   height:42px;
 
@@ -1914,5 +1880,46 @@ BOTÓN
   cursor:pointer;
 
   flex-shrink:0;
+
+}
+.direccion-oculta{
+  display:none;
+}
+.card-producto button:disabled{
+
+  background:#D9D9D9 !important;
+
+  color:#7A7A7A;
+
+  cursor:not-allowed;
+
+  box-shadow:none;
+
+  opacity:0.9;
+
+}
+.stock-ok{
+  color:var(--color-exito);
+}
+
+.stock-bajo{
+  color:var(--color-advertencia);
+}
+
+.stock-vacio{
+  color:var(--color-error);
+}
+
+.card-producto button:disabled{
+
+  background:#d9d9d9 !important;
+
+  color:#777 !important;
+
+  cursor:not-allowed;
+
+  opacity:.9;
+
+  box-shadow:none;
 
 }
