@@ -1,111 +1,116 @@
 :root {
 
   /* ========================================
-  COLORES
+     IDENTIDAD DE MARCA
   ======================================== */
 
-  --color-principal:
-    #D9204C;
+  --color-principal: #24582d;
+  --color-principal-hover: #16411c;
 
-  --color-principal-hover:
-    #b9183f;
-
-  --color-secundario:
-    #F8F7F5;
-
-  --color-fondo:
-    #f4f5f7;
-
-  --color-surface:
-    #ffffff;
-
-  --color-texto:
-    #222222;
-
-  --color-texto-soft:
-    #666666;
-
-  --color-borde:
-    #e5e5e5;
-
-  --color-overlay:
-    rgba(0,0,0,0.45);
-
-  --color-stock:
-    #080403;
-
-  --color-sin-stock:
-    #c62828;
+  --color-secundario: #F8F7F5;
 
   /* ========================================
-  TIPOGRAFÍA
+     SUPERFICIES Y FONDOS
+  ======================================== */
+
+  --color-fondo: #F4F5F7;
+
+  --color-surface: #FFFFFF;
+
+  --color-overlay: rgba(0, 0, 0, 0.45);
+
+  /* ========================================
+     TIPOGRAFÍA
+  ======================================== */
+
+  --color-texto: #222222;
+
+  --color-texto-soft: #666666;
+
+  --color-texto-invertido: #FFFFFF;
+
+  /* ========================================
+     BORDES
+  ======================================== */
+
+  --color-borde: #E5E5E5;
+
+  --color-borde-hover: #DADADA;
+
+  /* ========================================
+     ESTADOS
+  ======================================== */
+
+  --color-stock: #080403;
+
+  --color-sin-stock: #C62828;
+
+  --color-exito:#2E7D32;
+
+  --color-advertencia:#F57C00;
+
+  --color-error: #C62828;
+
+  /* ========================================
+     TIPOGRAFÍA
   ======================================== */
 
   --font-principal:
     "Poppins",
     sans-serif;
 
-  --text-xs:
-    12px;
+  --text-xs: 12px;
 
-  --text-sm:
-    14px;
+  --text-sm: 14px;
 
-  --text-md:
-    16px;
+  --text-md: 16px;
 
-  --text-lg:
-    18px;
+  --text-lg: 18px;
 
-  --text-xl:
-    24px;
+  --text-xl: 24px;
 
-  --line-height:
-    1.4;
+  --text-xxl: 32px;
+
+  --line-height: 1.4;
 
   /* ========================================
-  SPACING
+     ESPACIADOS
   ======================================== */
 
-  --space-1:
-    4px;
+  --space-1: 4px;
 
-  --space-2:
-    8px;
+  --space-2: 8px;
 
-  --space-3:
-    12px;
+  --space-3: 12px;
 
-  --space-4:
-    16px;
+  --space-4: 16px;
 
-  --space-5:
-    20px;
+  --space-5: 20px;
 
-  --space-6:
-    24px;
+  --space-6: 24px;
 
-  --space-7:
-    32px;
+  --space-7: 32px;
+
+  --space-8: 40px;
+
+  --space-9: 48px;
 
   /* ========================================
-  RADIOS
+     BORDES REDONDEADOS
   ======================================== */
 
-  --radius-sm:
-    10px;
+  --radius-sm: 10px;
 
-  --radius-md:
-    16px;
+  --radius-md: 16px;
 
-  --radius-lg:
-    22px;
+  --radius-lg: 22px;
 
-  --radius-full:
-    999px;
+  --radius-xl: 28px;
+
+  --radius-full: 999px;
 
   /* ========================================
-  SHADOWS
+     SOMBRAS
   ======================================== */
 
   --shadow-soft:
@@ -133,7 +138,7 @@
     );
 
   /* ========================================
-  TRANSITIONS
+     TRANSICIONES
   ======================================== */
 
   --transition-fast:
@@ -146,38 +151,31 @@
     0.4s ease;
 
   /* ========================================
-  LAYOUT
+     LAYOUT
   ======================================== */
 
-  --container-width:
-    1200px;
+  --container-width: 1200px;
 
-  --navbar-height:
-    72px;
+  --navbar-height: 72px;
 
-  --bottom-nav-height:
-    72px;
+  --bottom-nav-height: 72px;
+
+  --header-height: auto;
 
   /* ========================================
-  Z-INDEX
+     Z-INDEX
   ======================================== */
 
-  --z-header:
-    100;
+  --z-header: 100;
 
-  --z-overlay:
-    900;
+  --z-overlay: 900;
 
-  --z-menu:
-    950;
+  --z-menu: 950;
 
-  --z-cart:
-    960;
+  --z-cart: 960;
 
-  --z-floating:
-    970;
+  --z-floating: 970;
 
-  --z-modal:
-    999;
+  --z-modal: 999;
 
 }
