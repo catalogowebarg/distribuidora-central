@@ -1,8 +1,9 @@
 // ========================================
-// CARRITO
+// ESTADO DEL CARRITO
 // ========================================
 
 let carrito =
+
   JSON.parse(
     localStorage.getItem(
       "carrito"
@@ -10,57 +11,82 @@ let carrito =
   ) || [];
 
 // ========================================
-// GUARDAR
+// UTILIDADES
 // ========================================
 
 function guardarCarrito() {
 
   localStorage.setItem(
+
     "carrito",
+
     JSON.stringify(carrito)
+
   );
 
 }
 
-// ========================================
-// OBTENER PRODUCTO
-// ========================================
-
-function obtenerProducto(idProducto) {
+function obtenerProducto(
+  idProducto
+) {
 
   return PRODUCTOS.find(
+
     producto =>
       producto.id === idProducto
+
   );
 
 }
 
 // ========================================
-// AGREGAR
+// REFRESCAR UI
 // ========================================
 
-function agregarAlCarrito(idProducto) {
+function actualizarCarritoUI() {
+
+  guardarCarrito();
+
+  renderizarCarrito();
+
+  actualizarContadorCarrito();
+
+}
+
+// ========================================
+// AGREGAR PRODUCTO
+// ========================================
+
+function agregarAlCarrito(
+  idProducto
+) {
 
   const producto =
-    obtenerProducto(idProducto);
+    obtenerProducto(
+      idProducto
+    );
 
   if (!producto) return;
 
   const itemExistente =
     carrito.find(
+
       item =>
         item.id === idProducto
+
     );
 
   // ========================================
-  // EXISTE
+  // PRODUCTO EXISTENTE
   // ========================================
 
   if (itemExistente) {
 
     if (
+
       itemExistente.cantidad <
       producto.stock
+
     ) {
 
       itemExistente.cantidad++;
@@ -70,7 +96,7 @@ function agregarAlCarrito(idProducto) {
   }
 
   // ========================================
-  // NUEVO
+  // NUEVO PRODUCTO
   // ========================================
 
   else {
@@ -87,16 +113,115 @@ function agregarAlCarrito(idProducto) {
 
   }
 
-  guardarCarrito();
-
-  renderizarCarrito();
-
-  actualizarContadorCarrito();
+  actualizarCarritoUI();
 
 }
 
 // ========================================
-// RENDER
+// AUMENTAR CANTIDAD
+// ========================================
+
+function aumentarCantidad(
+  idProducto
+) {
+
+  const item =
+    carrito.find(
+
+      item =>
+        item.id === idProducto
+
+    );
+
+  const producto =
+    obtenerProducto(
+      idProducto
+    );
+
+  if (
+
+    !item ||
+    !producto
+
+  ) {
+
+    return;
+
+  }
+
+  if (
+
+    item.cantidad <
+    producto.stock
+
+  ) {
+
+    item.cantidad++;
+
+  }
+
+  actualizarCarritoUI();
+
+}
+
+// ========================================
+// DISMINUIR CANTIDAD
+// ========================================
+
+function disminuirCantidad(
+  idProducto
+) {
+
+  const item =
+    carrito.find(
+
+      item =>
+        item.id === idProducto
+
+    );
+
+  if (!item) return;
+
+  if (
+
+    item.cantidad > 1
+
+  ) {
+
+    item.cantidad--;
+
+  }
+
+  else {
+
+    carrito =
+      carrito.filter(
+
+        item =>
+          item.id !== idProducto
+
+      );
+
+  }
+
+  actualizarCarritoUI();
+
+}
+
+// ========================================
+// VACIAR CARRITO
+// ========================================
+
+function vaciarCarrito() {
+
+  carrito = [];
+
+  actualizarCarritoUI();
+
+}
+
+// ========================================
+// RENDERIZAR CARRITO
 // ========================================
 
 function renderizarCarrito() {
@@ -117,50 +242,47 @@ function renderizarCarrito() {
     );
 
   if (
+
     !lista ||
     !totalContainer ||
     !mensajeVacio
-  ) return;
 
-  lista.innerHTML = "";
+  ) {
 
-  // ========================================
-  // VACÍO
-  // ========================================
-
-  if (carrito.length === 0) {
-
-    mensajeVacio.style.display =
-      "block";
-
-  } else {
-
-    mensajeVacio.style.display =
-      "none";
+    return;
 
   }
 
-  let total = 0;
+  lista.innerHTML = "";
 
-  // ========================================
-  // ITEMS
-  // ========================================
+  mensajeVacio.style.display =
+
+    carrito.length === 0
+      ? "block"
+      : "none";
+
+  let total = 0;
 
   carrito.forEach(item => {
 
     const producto =
-      obtenerProducto(item.id);
+      obtenerProducto(
+        item.id
+      );
 
     if (!producto) return;
 
     const subtotal =
+
       producto.precio *
       item.cantidad;
 
     total += subtotal;
 
     const li =
-      document.createElement("li");
+      document.createElement(
+        "li"
+      );
 
     li.className =
       "item-carrito";
@@ -211,116 +333,14 @@ function renderizarCarrito() {
 
   });
 
-  // ========================================
-  // TOTAL
-  // ========================================
-
   totalContainer.textContent =
+
     `Total: ${CONFIG.catalogo.moneda}${total}`;
 
 }
 
 // ========================================
-// AUMENTAR
-// ========================================
-
-function aumentarCantidad(idProducto) {
-
-  const item =
-    carrito.find(
-      item =>
-        item.id === idProducto
-    );
-
-  const producto =
-    obtenerProducto(idProducto);
-
-  if (
-    !item ||
-    !producto
-  ) return;
-
-  if (
-    item.cantidad <
-    producto.stock
-  ) {
-
-    item.cantidad++;
-
-  }
-
-  guardarCarrito();
-
-  renderizarCarrito();
-
-  actualizarContadorCarrito();
-
-}
-
-// ========================================
-// DISMINUIR
-// ========================================
-
-function disminuirCantidad(idProducto) {
-
-  const item =
-    carrito.find(
-      item =>
-        item.id === idProducto
-    );
-
-  if (!item) return;
-
-  // ========================================
-  // RESTAR
-  // ========================================
-
-  if (item.cantidad > 1) {
-
-    item.cantidad--;
-
-  }
-
-  // ========================================
-  // ELIMINAR
-  // ========================================
-
-  else {
-
-    carrito =
-      carrito.filter(
-        item =>
-          item.id !== idProducto
-      );
-
-  }
-
-  guardarCarrito();
-
-  renderizarCarrito();
-
-  actualizarContadorCarrito();
-
-}
-
-// ========================================
-// VACIAR
-// ========================================
-
-function vaciarCarrito() {
-
-  carrito = [];
-
-  guardarCarrito();
-
-  renderizarCarrito();
-
-  actualizarContadorCarrito();
-
-}
-
-// ========================================
-// CONTADOR + BARRA
+// CONTADOR + BARRA FLOTANTE
 // ========================================
 
 function actualizarContadorCarrito() {
@@ -346,35 +366,57 @@ function actualizarContadorCarrito() {
     );
 
   const totalCantidad =
+
     carrito.reduce(
-      (acc, item) =>
-        acc + item.cantidad,
+
+      (acumulado, item) =>
+
+        acumulado +
+        item.cantidad,
+
       0
+
     );
 
   const totalPrecio =
+
     carrito.reduce(
-      (acc, item) => {
+
+      (
+        acumulado,
+        item
+      ) => {
 
         const producto =
-          obtenerProducto(item.id);
+          obtenerProducto(
+            item.id
+          );
 
-        if (!producto) return acc;
+        if (!producto) {
+
+          return acumulado;
+
+        }
 
         return (
-          acc +
+
+          acumulado +
+
           (
             producto.precio *
             item.cantidad
           )
+
         );
 
       },
+
       0
+
     );
 
   // ========================================
-  // CONTADOR NAVBAR
+  // CONTADOR INFERIOR
   // ========================================
 
   if (contadorInferior) {
@@ -383,6 +425,7 @@ function actualizarContadorCarrito() {
       totalCantidad;
 
     contadorInferior.style.display =
+
       totalCantidad > 0
         ? "flex"
         : "none";
@@ -394,9 +437,11 @@ function actualizarContadorCarrito() {
   // ========================================
 
   if (
+
     barra &&
     barraCantidad &&
     barraTotal
+
   ) {
 
     if (totalCantidad > 0) {
@@ -405,9 +450,11 @@ function actualizarContadorCarrito() {
         "flex";
 
       barraCantidad.textContent =
+
         `${totalCantidad} producto${totalCantidad > 1 ? "s" : ""} en el carrito`;
 
       barraTotal.textContent =
+
         `Total: ${CONFIG.catalogo.moneda}${totalPrecio}`;
 
     }
