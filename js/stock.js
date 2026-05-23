@@ -1,80 +1,59 @@
 // ========================================
-// GOOGLE SHEETS
+// GOOGLE SHEETS / SHEETDB
+// ========================================
+//
+// Responsabilidades:
+//
+// • Obtener datos remotos
+// • Validar respuesta
+// • Actualizar catálogo local
+// • Refrescar interfaz
+//
+// ========================================
+
+// ========================================
+// CARGAR DATOS
 // ========================================
 
 async function cargarDatosSheets() {
 
-  // ========================================
-  // CONFIG
-  // ========================================
-
-  if (
-    !CONFIG.catalogo.usarGoogleSheets
-  ) {
-
+  if (!CONFIG.catalogo.usarGoogleSheets) {
     return;
-
   }
 
   try {
 
-    // ========================================
-    // FETCH
-    // ========================================
-
-    const respuesta =
-      await fetch(
-
-        `${CONFIG.catalogo.sheetDB}?nocache=${Date.now()}`,
-
-        {
-          method: "GET"
-        }
-
-      );
-
-    // ========================================
-    // ERROR RESPUESTA
-    // ========================================
+    const respuesta = await fetch(
+      `${CONFIG.catalogo.sheetDB}?nocache=${Date.now()}`,
+      {
+        method: "GET",
+        cache: "no-store"
+      }
+    );
 
     if (!respuesta.ok) {
 
       throw new Error(
-        "No se pudo conectar con Google Sheets"
+        `Error ${respuesta.status}`
       );
 
     }
 
-    // ========================================
-    // JSON
-    // ========================================
-
-    const datos =
-      await respuesta.json();
-
-    // ========================================
-    // VALIDAR
-    // ========================================
+    const datos = await respuesta.json();
 
     if (!Array.isArray(datos)) {
 
       throw new Error(
-        "Formato inválido de Google Sheets"
+        "Formato inválido recibido desde SheetDB"
       );
 
     }
 
-    // ========================================
-    // ACTUALIZAR
-    // ========================================
-
-    actualizarProductos(
-      datos
-    );
+    actualizarProductos(datos);
 
   }
 
-  catch(error) {
+  catch (error) {
 
     console.error(
       "Error cargando Google Sheets:",
@@ -86,165 +65,171 @@ async function cargarDatosSheets() {
 }
 
 // ========================================
-// ACTUALIZAR PRODUCTOS
+// UTILIDADES
+// ========================================
+
+function tieneValor(valor) {
+
+  return (
+    valor !== undefined &&
+    valor !== null &&
+    String(valor).trim() !== ""
+  );
+
+}
+
+function actualizarTexto(
+  producto,
+  propiedad,
+  valor
+) {
+
+  if (!tieneValor(valor)) {
+    return;
+  }
+
+  producto[propiedad] =
+    String(valor).trim();
+
+}
+
+function actualizarNumero(
+  producto,
+  propiedad,
+  valor
+) {
+
+  if (!tieneValor(valor)) {
+    return;
+  }
+
+  const numero = Number(valor);
+
+  if (!Number.isNaN(numero)) {
+
+    producto[propiedad] =
+      numero;
+
+  }
+
+}
+
+// ========================================
+// ACTUALIZAR CATÁLOGO
 // ========================================
 
 function actualizarProductos(
   datosSheets
 ) {
 
-  if (
-    !Array.isArray(datosSheets)
-  ) return;
+  if (!Array.isArray(datosSheets)) {
+    return;
+  }
 
-  // ========================================
-  // RECORRER
-  // ========================================
+  // Índice rápido por ID
+  const productosPorId =
+    new Map(
+      PRODUCTOS.map(
+        producto => [
+          producto.id,
+          producto
+        ]
+      )
+    );
 
   datosSheets.forEach(itemSheet => {
 
-    // ========================================
-    // VALIDAR ID
-    // ========================================
-
-    if (
-      !itemSheet.id ||
-      itemSheet.id.trim() === ""
-    ) {
-
+    if (!tieneValor(itemSheet.id)) {
       return;
-
     }
 
-    // ========================================
-    // BUSCAR PRODUCTO
-    // ========================================
+    const id =
+      String(itemSheet.id).trim();
 
     const producto =
-      PRODUCTOS.find(
-        item =>
-          item.id === itemSheet.id
-      );
-
-    // ========================================
-    // NO EXISTE
-    // ========================================
+      productosPorId.get(id);
 
     if (!producto) {
 
       console.warn(
-        `Producto no encontrado: ${itemSheet.id}`
+        `Producto no encontrado: ${id}`
       );
 
       return;
 
     }
 
-    // ========================================
-    // NOMBRE
-    // ========================================
+    // TEXTOS
 
-    if (
-      itemSheet.nombre &&
-      itemSheet.nombre.trim() !== ""
-    ) {
+    actualizarTexto(
+      producto,
+      "nombre",
+      itemSheet.nombre
+    );
 
-      producto.nombre =
-        itemSheet.nombre.trim();
+    actualizarTexto(
+      producto,
+      "descripcion",
+      itemSheet.descripcion
+    );
 
-    }
+    actualizarTexto(
+      producto,
+      "categoria",
+      itemSheet.categoria
+    );
 
-    // ========================================
-    // DESCRIPCIÓN
-    // ========================================
+    actualizarTexto(
+      producto,
+      "imagen",
+      itemSheet.imagen
+    );
 
-    if (
-      itemSheet.descripcion &&
-      itemSheet.descripcion.trim() !== ""
-    ) {
+    // NUMÉRICOS
 
-      producto.descripcion =
-        itemSheet.descripcion.trim();
+    actualizarNumero(
+      producto,
+      "precio",
+      itemSheet.precio
+    );
 
-    }
-
-    // ========================================
-    // CATEGORÍA
-    // ========================================
-
-    if (
-      itemSheet.categoria &&
-      itemSheet.categoria.trim() !== ""
-    ) {
-
-      producto.categoria =
-        itemSheet.categoria.trim();
-
-    }
-
-    // ========================================
-    // PRECIO
-    // ========================================
-
-    if (
-      itemSheet.precio !== ""
-    ) {
-
-      const precio =
-        Number(
-          itemSheet.precio
-        );
-
-      if (!isNaN(precio)) {
-
-        producto.precio =
-          precio;
-
-      }
-
-    }
-
-    // ========================================
-    // STOCK
-    // ========================================
-
-    if (
-      itemSheet.stock !== ""
-    ) {
-
-      const stock =
-        Number(
-          itemSheet.stock
-        );
-
-      if (!isNaN(stock)) {
-
-        producto.stock =
-          stock;
-
-      }
-
-    }
-
-    // ========================================
-    // IMAGEN
-    // ========================================
-
-    if (
-      itemSheet.imagen &&
-      itemSheet.imagen.trim() !== ""
-    ) {
-
-      producto.imagen =
-        itemSheet.imagen.trim();
-
-    }
+    actualizarNumero(
+      producto,
+      "stock",
+      itemSheet.stock
+    );
 
   });
 
-  // ========================================
-  // RE-RENDER
-  // ========================================
+  refrescarCatalogo();
+
+}
+
+// ========================================
+// STOCK VISUAL
+// ========================================
+
+function obtenerClaseStock(
+  stock
+) {
+
+  if (stock <= 0) {
+    return "stock-vacio";
+  }
+
+  if (stock <= 5) {
+    return "stock-bajo";
+  }
+
+  return "stock-ok";
+
+}
+
+// ========================================
+// REFRESCAR INTERFAZ
+// ========================================
+
+function refrescarCatalogo() {
 
   renderizarCategorias();
 
