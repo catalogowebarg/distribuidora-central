@@ -1,42 +1,41 @@
 // ========================================
-// ICONOS CATEGORÍAS
+// CONFIGURACIÓN DE CATEGORÍAS
+// ========================================
+//
+// Iconos mostrados en cada categoría.
+//
+// Si una categoría no existe aquí,
+// se mostrará el icono por defecto 📦.
+//
 // ========================================
 
 const ICONOS_CATEGORIAS = {
 
-  "Cervezas":
-    "🍺",
+  "Cervezas": "🍺",
 
-  "Linea Coca Cola":
-    "🥤",
+  "Linea Coca Cola": "🥤",
 
-  "Aguas":
-    "💧",
+  "Aguas": "💧",
 
-  "Vinos":
-    "🍷",
+  "Vinos": "🍷",
 
-  "Licores":
-    "🥃",
+  "Licores": "🥃",
 
-  "Snacks":
-    "🍟"
+  "Snacks": "🍟"
 
 };
 
 // ========================================
-// ESTADO
+// ESTADO GLOBAL
 // ========================================
 
 let categoriaActual = "";
 
 // ========================================
-// NORMALIZAR
+// UTILIDADES
 // ========================================
 
-function normalizarCategoria(
-  categoria
-) {
+function normalizarCategoria(categoria) {
 
   if (!categoria) {
 
@@ -44,51 +43,43 @@ function normalizarCategoria(
 
   }
 
-  return categoria
-    .trim();
+  return categoria.trim();
 
 }
 
 // ========================================
-// OBTENER CATEGORÍAS
+// OBTENER CATEGORÍAS ÚNICAS
 // ========================================
 
 function obtenerCategorias() {
 
-  const categorias =
-    PRODUCTOS.map(
-      producto =>
+  return [
 
-        normalizarCategoria(
-          producto.categoria
+    ...new Set(
+
+      PRODUCTOS
+
+        .map(producto =>
+          normalizarCategoria(
+            producto.categoria
+          )
         )
+
+        .filter(Boolean)
+
     )
 
-    // ELIMINAR VACÍAS
-
-    .filter(
-      categoria =>
-        categoria !== ""
-    );
-
-  // ELIMINAR DUPLICADAS
-
-  return [
-    ...new Set(categorias)
   ];
 
 }
 
 // ========================================
-// CAMBIAR CATEGORÍA
+// CAMBIAR CATEGORÍA ACTIVA
 // ========================================
 
-function cambiarCategoria(
-  categoria
-) {
+function cambiarCategoria(categoria) {
 
-  categoriaActual =
-    categoria;
+  categoriaActual = categoria;
 
   actualizarEstadoCategorias();
 
@@ -109,14 +100,12 @@ function actualizarEstadoCategorias() {
 
   botones.forEach(button => {
 
-    const categoria =
-      button.dataset.categoria;
-
     button.classList.toggle(
 
       "categoria-activa",
 
-      categoria === categoriaActual
+      button.dataset.categoria ===
+      categoriaActual
 
     );
 
@@ -125,24 +114,18 @@ function actualizarEstadoCategorias() {
 }
 
 // ========================================
-// CREAR BOTÓN
+// CREAR BOTÓN DE CATEGORÍA
 // ========================================
 
-function crearBotonCategoria(
-  categoria
-) {
+function crearBotonCategoria(categoria) {
 
   const button =
     document.createElement(
       "button"
     );
 
-  // DATASET
-
   button.dataset.categoria =
     categoria;
-
-  // HTML
 
   button.innerHTML = `
 
@@ -156,14 +139,10 @@ function crearBotonCategoria(
     </span>
 
     <span>
-
       ${categoria}
-
     </span>
 
   `;
-
-  // ACTIVA
 
   if (
     categoria === categoriaActual
@@ -175,17 +154,9 @@ function crearBotonCategoria(
 
   }
 
-  // CLICK
-
   button.addEventListener(
     "click",
-    () => {
-
-      cambiarCategoria(
-        categoria
-      );
-
-    }
+    () => cambiarCategoria(categoria)
   );
 
   return button;
@@ -193,7 +164,7 @@ function crearBotonCategoria(
 }
 
 // ========================================
-// RENDER
+// RENDERIZAR CATEGORÍAS
 // ========================================
 
 function renderizarCategorias() {
@@ -205,20 +176,20 @@ function renderizarCategorias() {
 
   if (!contenedor) return;
 
-  // LIMPIAR
-
   contenedor.innerHTML = "";
-
-  // OBTENER
 
   const categorias =
     obtenerCategorias();
 
-  // INICIAL
+  // ========================================
+  // CATEGORÍA INICIAL
+  // ========================================
 
   if (
+
     !categoriaActual &&
     categorias.length > 0
+
   ) {
 
     categoriaActual =
@@ -226,17 +197,18 @@ function renderizarCategorias() {
 
   }
 
-  // RENDER
+  // ========================================
+  // CREAR BOTONES
+  // ========================================
 
   categorias.forEach(categoria => {
 
-    const boton =
+    contenedor.appendChild(
+
       crearBotonCategoria(
         categoria
-      );
+      )
 
-    contenedor.appendChild(
-      boton
     );
 
   });
