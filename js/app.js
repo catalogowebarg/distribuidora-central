@@ -14,6 +14,8 @@ document.addEventListener(
 
     iniciarConfiguracion();
 
+aplicarTema();
+
     // GOOGLE SHEETS
 
     if (
@@ -101,9 +103,69 @@ function iniciarConfiguracion() {
       CONFIG.negocio.logo;
 
   }
+  const footerCopyright =
+  document.getElementById(
+    "footer-copyright"
+  );
+
+if (footerCopyright) {
+
+  footerCopyright.textContent =
+
+    `© ${new Date().getFullYear()} ${CONFIG.negocio.nombre}`;
 
 }
 
+}
+// ========================================
+// TEMA DINÁMICO
+// ========================================
+
+function aplicarTema() {
+
+  const root =
+    document.documentElement;
+
+  if (
+    !CONFIG.colores ||
+    !root
+  ) {
+    return;
+  }
+
+  // COLORES PRINCIPALES
+
+  root.style.setProperty(
+    "--color-principal",
+    CONFIG.colores.principal
+  );
+
+  root.style.setProperty(
+    "--color-principal-hover",
+    CONFIG.colores.secundario
+  );
+
+  // OPCIONALES
+
+  if (CONFIG.colores.fondo) {
+
+    root.style.setProperty(
+      "--color-fondo",
+      CONFIG.colores.fondo
+    );
+
+  }
+
+  if (CONFIG.colores.texto) {
+
+    root.style.setProperty(
+      "--color-texto",
+      CONFIG.colores.texto
+    );
+
+  }
+
+}
 // ========================================
 // RENDER PRODUCTOS
 // ========================================
@@ -219,15 +281,21 @@ function renderizarProductos() {
 
             </p>
 
-            <p class="stock">
+            <p class="stock ${
+  producto.stock <= 0
+    ? "stock-vacio"
+    : producto.stock <= 5
+      ? "stock-bajo"
+      : "stock-ok"
+}">
 
-              ${
-                producto.stock > 0
-                  ? `Stock ${producto.stock}`
-                  : "Sin stock"
-              }
+  ${
+    producto.stock <= 0
+      ? "Sin stock"
+      : `Stock ${producto.stock}`
+  }
 
-            </p>
+</p>
 
           </div>
 
@@ -985,7 +1053,7 @@ let touchEndX = 0;
   iniciarAutoplay();
 
 }
-  // ========================================
+// ========================================
 // BOTTOM NAV
 // ========================================
 
@@ -1068,4 +1136,3 @@ function inicializarBottomNav() {
   }
 
 }
-
