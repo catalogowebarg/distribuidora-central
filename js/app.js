@@ -40,6 +40,8 @@ aplicarTema();
 
   inicializarEventos();
 
+  inicializarLocalidades();
+
 inicializarSlider();
 
 inicializarCarritoPanel();
@@ -1134,5 +1136,73 @@ function inicializarBottomNav() {
     );
 
   }
+
+}
+// ========================================
+// ENVÍOS
+// ========================================
+
+function inicializarLocalidades() {
+
+  const select =
+    document.getElementById(
+      "localidad-cliente"
+    );
+
+  if (!select) return;
+
+  obtenerLocalidades()
+    .forEach(localidad => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        localidad;
+
+      option.textContent =
+        localidad;
+
+      select.appendChild(
+        option
+      );
+
+    });
+
+  select.addEventListener(
+    "change",
+    actualizarCostoEnvio
+  );
+
+}
+
+function actualizarCostoEnvio() {
+
+  const select =
+    document.getElementById(
+      "localidad-cliente"
+    );
+
+  const costo =
+    document.getElementById(
+      "costo-envio"
+    );
+
+  if (
+    !select ||
+    !costo
+  ) {
+    return;
+  }
+
+  const valor =
+    obtenerCostoEnvio(
+      select.value
+    );
+
+  costo.textContent =
+    `${CONFIG.catalogo.moneda}${valor}`;
 
 }
