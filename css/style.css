@@ -1923,3 +1923,124 @@ BOTÓN
   box-shadow:none;
 
 }
+/* ========================================
+ENVÍOS
+======================================== */
+
+#localidad-cliente{
+
+  width:100%;
+
+  padding:14px;
+
+  border:1px solid #ddd;
+
+  border-radius:14px;
+
+  margin-bottom:12px;
+
+  font-size:14px;
+
+  background:white;
+
+}
+
+#info-envio{
+
+  margin-top:8px;
+
+  font-size:14px;
+
+  color:var(--color-texto);
+
+}
+/* ========================================
+CAMPO ERROR
+======================================== */
+
+.campo-error{
+
+  border:2px solid #e53935 !important;
+
+  animation:
+    shakeCampo .35s ease;
+
+}
+
+@keyframes shakeCampo{
+
+  0%{
+    transform:translateX(0);
+  }
+
+  25%{
+    transform:translateX(-4px);
+  }
+
+  50%{
+    transform:translateX(4px);
+  }
+
+  75%{
+    transform:translateX(-4px);
+  }
+
+  100%{
+    transform:translateX(0);
+  }
+
+}
+/* ========================================
+ERROR FORMULARIO
+======================================== */
+
+.campo-error{
+
+  border:2px solid #E53935 !important;
+
+  animation:
+    shakeCampo .35s ease;
+
+}
+
+.mensaje-error{
+
+  color:#E53935;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  margin-top:6px;
+
+  margin-bottom:10px;
+
+}
+
+/* ========================================
+ANIMACIÓN
+======================================== */
+
+@keyframes shakeCampo{
+
+  0%{
+    transform:translateX(0);
+  }
+
+  25%{
+    transform:translateX(-4px);
+  }
+
+  50%{
+    transform:translateX(4px);
+  }
+
+  75%{
+    transform:translateX(-4px);
+  }
+
+  100%{
+    transform:translateX(0);
+  }
+
+}
