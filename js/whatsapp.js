@@ -37,9 +37,129 @@ function obtenerDatosCliente() {
 
       direccionInput
         ? direccionInput.value.trim()
-        : ""
+        : "",
+
+    localidad:
+
+      obtenerLocalidadSeleccionada()
 
   };
+
+}
+
+// ========================================
+// LOCALIDAD
+// ========================================
+
+function obtenerLocalidadSeleccionada() {
+
+  const select =
+    document.getElementById(
+      "localidad-cliente"
+    );
+
+  return select
+    ? select.value
+    : "";
+
+}
+
+// ========================================
+// MOSTRAR ERROR
+// ========================================
+
+function mostrarErrorCampo(
+  idCampo,
+  mensaje
+) {
+
+  const campo =
+    document.getElementById(
+      idCampo
+    );
+
+  if (!campo) return;
+
+  cerrarCarritoValidacion();
+
+  campo.classList.add(
+    "campo-error"
+  );
+
+  let mensajeError =
+    campo.nextElementSibling;
+
+  if (
+
+    !mensajeError ||
+
+    !mensajeError.classList.contains(
+      "mensaje-error"
+    )
+
+  ) {
+
+    mensajeError =
+      document.createElement(
+        "p"
+      );
+
+    mensajeError.className =
+      "mensaje-error";
+
+    campo.insertAdjacentElement(
+      "afterend",
+      mensajeError
+    );
+
+  }
+
+  mensajeError.textContent =
+    mensaje;
+
+  setTimeout(() => {
+
+    campo.focus();
+
+  }, 100);
+
+  campo.scrollIntoView({
+
+    behavior: "smooth",
+
+    block: "center"
+
+  });
+
+}
+
+// ========================================
+// LIMPIAR ERRORES
+// ========================================
+
+function limpiarErroresFormulario() {
+
+  document
+    .querySelectorAll(
+      ".campo-error"
+    )
+    .forEach(campo => {
+
+      campo.classList.remove(
+        "campo-error"
+      );
+
+    });
+
+  document
+    .querySelectorAll(
+      ".mensaje-error"
+    )
+    .forEach(error => {
+
+      error.remove();
+
+    });
 
 }
 
@@ -48,6 +168,8 @@ function obtenerDatosCliente() {
 // ========================================
 
 function validarPedido() {
+
+  limpiarErroresFormulario();
 
   if (carrito.length === 0) {
 
@@ -62,28 +184,63 @@ function validarPedido() {
   const datos =
     obtenerDatosCliente();
 
+  // ========================================
+  // NOMBRE
+  // ========================================
+
   if (!datos.nombre) {
 
-    alert(
-      "Ingresá tu nombre"
+    mostrarErrorCampo(
+
+      "nombre-cliente",
+
+      "Ingresá tu nombre para continuar"
+
     );
 
     return false;
 
   }
 
+  // ========================================
+  // DELIVERY
+  // ========================================
+
   if (
-
-    datos.entrega === "delivery" &&
-    !datos.direccion
-
+    datos.entrega === "delivery"
   ) {
 
-    alert(
-      "Ingresá una dirección"
-    );
+    // LOCALIDAD
 
-    return false;
+    if (!datos.localidad) {
+
+      mostrarErrorCampo(
+
+        "localidad-cliente",
+
+        "Seleccioná una localidad"
+
+      );
+
+      return false;
+
+    }
+
+    // DIRECCIÓN
+
+    if (!datos.direccion) {
+
+      mostrarErrorCampo(
+
+        "direccion-cliente",
+
+        "Ingresá una dirección"
+
+      );
+
+      return false;
+
+    }
 
   }
 
@@ -92,7 +249,7 @@ function validarPedido() {
 }
 
 // ========================================
-// CALCULAR TOTAL
+// SUBTOTAL PRODUCTOS
 // ========================================
 
 function calcularTotalPedido() {
@@ -132,7 +289,48 @@ function calcularTotalPedido() {
 }
 
 // ========================================
-// GENERAR BLOQUE PRODUCTOS
+// ENVÍO
+// ========================================
+
+function calcularEnvioPedido() {
+
+  const datos =
+    obtenerDatosCliente();
+
+  if (
+    datos.entrega !== "delivery"
+  ) {
+
+    return 0;
+
+  }
+
+  return obtenerCostoEnvio(
+    datos.localidad
+  );
+
+}
+
+// ========================================
+// TOTAL FINAL
+// ========================================
+
+function calcularTotalFinalPedido() {
+
+  return (
+
+    calcularTotalPedido()
+
+    +
+
+    calcularEnvioPedido()
+
+  );
+
+}
+
+// ========================================
+// PRODUCTOS
 // ========================================
 
 function generarBloqueProductos() {
@@ -172,7 +370,7 @@ function generarBloqueProductos() {
 }
 
 // ========================================
-// GENERAR MENSAJE
+// MENSAJE WHATSAPP
 // ========================================
 
 function generarMensajeWhatsApp() {
@@ -180,8 +378,14 @@ function generarMensajeWhatsApp() {
   const datos =
     obtenerDatosCliente();
 
-  const total =
+  const subtotal =
     calcularTotalPedido();
+
+  const envio =
+    calcularEnvioPedido();
+
+  const total =
+    calcularTotalFinalPedido();
 
   let mensaje = `
 
@@ -190,28 +394,20 @@ function generarMensajeWhatsApp() {
 
 `;
 
-  // ========================================
-  // PRODUCTOS
-  // ========================================
-
   mensaje +=
     generarBloqueProductos();
-
-  // ========================================
-  // TOTAL
-  // ========================================
 
   mensaje += `
 
 ━━━━━━━━━━━━━━
 
-💰 *TOTAL:* ${CONFIG.catalogo.moneda}${total}
+💰 *SUBTOTAL:* ${CONFIG.catalogo.moneda}${subtotal}
+
+🚚 *ENVÍO:* ${CONFIG.catalogo.moneda}${envio}
+
+💵 *TOTAL FINAL:* ${CONFIG.catalogo.moneda}${total}
 
 `;
-
-  // ========================================
-  // CLIENTE
-  // ========================================
 
   mensaje += `
 
@@ -221,25 +417,19 @@ function generarMensajeWhatsApp() {
 
 `;
 
-  // ========================================
-  // DIRECCIÓN
-  // ========================================
-
   if (
     datos.entrega === "delivery"
   ) {
 
     mensaje += `
 
+🏙️ *Localidad:* ${datos.localidad}
+
 📍 *Dirección:* ${datos.direccion}
 
 `;
 
   }
-
-  // ========================================
-  // FINAL
-  // ========================================
 
   mensaje += `
 
@@ -289,5 +479,41 @@ function finalizarPedido() {
     "_blank"
 
   );
+
+}
+// ========================================
+// CERRAR CARRITO
+// ========================================
+
+function cerrarCarritoValidacion() {
+
+  const panel =
+    document.getElementById(
+      "seccion-carrito"
+    );
+
+  const overlay =
+    document.getElementById(
+      "overlay-carrito"
+    );
+
+  if (panel) {
+
+    panel.classList.remove(
+      "carrito-abierto"
+    );
+
+  }
+
+  if (overlay) {
+
+    overlay.classList.remove(
+      "overlay-activo"
+    );
+
+  }
+
+  document.body.style.overflow =
+    "";
 
 }
