@@ -544,18 +544,37 @@ TÍTULO PRODUCTOS
   class="direccion-oculta"
 >
 
-        <input
-          type="text"
-          id="direccion-cliente"
-          placeholder="Dirección de entrega"
-          autocomplete="street-address"
-        >
+  <select
+    id="localidad-cliente"
+  >
 
-      </div>
+    <option value="">
+      Seleccionar localidad
+    </option>
 
-    </section>
+  </select>
+
+  <input
+    type="text"
+    id="direccion-cliente"
+    placeholder="Dirección de entrega"
+    autocomplete="street-address"
+  >
+
+  <div id="info-envio">
+
+    <strong>
+
+      Envío:
+      <span id="costo-envio">
+        $0
+      </span>
+
+    </strong>
 
   </div>
+
+</div>
 
   <!-- ========================================
   OVERLAY CARRITO
@@ -810,6 +829,11 @@ TÍTULO PRODUCTOS
     src="js/categorias.js"
     defer
   ></script>
+
+  <script
+   src="js/envios.js" 
+   defer
+   ></script>
 
   <script
     src="js/carrito.js"
